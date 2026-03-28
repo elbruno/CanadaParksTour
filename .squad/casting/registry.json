@@ -1,0 +1,44 @@
+{
+  "agents": {
+    "malcolm": {
+      "persistent_name": "Malcolm",
+      "universe": "Jurassic Park",
+      "role": "Lead",
+      "created_at": "2026-03-28T12:27:00Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "arnold": {
+      "persistent_name": "Arnold",
+      "universe": "Jurassic Park",
+      "role": "Backend Dev",
+      "created_at": "2026-03-28T12:27:00Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "sattler": {
+      "persistent_name": "Sattler",
+      "universe": "Jurassic Park",
+      "role": "Frontend Dev",
+      "created_at": "2026-03-28T12:27:00Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "grant": {
+      "persistent_name": "Grant",
+      "universe": "Jurassic Park",
+      "role": "AI Dev",
+      "created_at": "2026-03-28T12:27:00Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "muldoon": {
+      "persistent_name": "Muldoon",
+      "universe": "Jurassic Park",
+      "role": "Tester",
+      "created_at": "2026-03-28T12:27:00Z",
+      "legacy_named": false,
+      "status": "active"
+    }
+  }
+}
