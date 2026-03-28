@@ -1,0 +1,135 @@
+@using OntarioParksExplorer.Blazor.Models
+@using OntarioParksExplorer.Blazor.Services
+@inject ParksApiClient ApiClient
+@inject NavigationManager Navigation
+
+<MudPaper Class="pa-4" Elevation="2">
+    <MudText Typo="Typo.h5" Class="mb-3">
+        <MudIcon Icon="@Icons.Material.Filled.Lightbulb" Class="mr-2" />
+        AI Park Recommendations
+    </MudText>
+
+    @if (recommendations.Count == 0)
+    {
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle2" Class="mb-2">What activities are you interested in?</MudText>
+                <MudChipSet T="string" SelectionMode="SelectionMode.MultiSelection" @bind-SelectedValues="selectedActivities">
+                    @foreach (var activity in availableActivities)
+                    {
+                        <MudChip T="string" Value="@activity.Name" Color="Color.Primary" Variant="Variant.Outlined">
+                            @activity.Name
+                        </MudChip>
+                    }
+                </MudChipSet>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudSelect T="string" 
+                          @bind-Value="selectedRegion" 
+                          Label="Preferred Region (Optional)" 
+                          Variant="Variant.Outlined"
+                          Clearable="true">
+                    <MudSelectItem T="string" Value="@("Northeast")">Northeast</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Northwest")">Northwest</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Central")">Central</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Southeast")">Southeast</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Southwest")">Southwest</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudTextField @bind-Value="preferenceText" 
+                             Label="Tell us more about what you're looking for (Optional)" 
+                             Variant="Variant.Outlined"
+                             Lines="3" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" 
+                          Color="Color.Primary" 
+                          OnClick="GetRecommendations"
+                          Disabled="@(isLoading || selectedActivities.Count == 0)"
+                          StartIcon="@Icons.Material.Filled.AutoAwesome">
+                    @(isLoading ? "Finding Recommendations..." : "Get Recommendations")
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    }
+    else
+    {
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body1" Class="mb-2">
+                Based on your preferences, here are our top recommendations:
+            </MudText>
+
+            @foreach (var rec in recommendations)
+            {
+                <MudCard>
+                    <MudCardContent>
+                        <MudText Typo="Typo.h6">@rec.ParkName</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mt-1">@rec.Reason</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Text" 
+                                  Color="Color.Primary" 
+                                  OnClick="@(() => NavigateToPark(rec.ParkId))">
+                            View Details
+                        </MudButton>
+                    </MudCardActions>
+                </MudCard>
+            }
+
+            <MudButton Variant="Variant.Outlined" 
+                      Color="Color.Primary" 
+                      OnClick="ResetRecommendations"
+                      StartIcon="@Icons.Material.Filled.Refresh"
+                      Class="mt-2">
+                Get New Recommendations
+            </MudButton>
+        </MudStack>
+    }
+</MudPaper>
+
+@code {
+    private IReadOnlyCollection<string> selectedActivities { get; set; } = new List<string>();
+    private string? selectedRegion;
+    private string? preferenceText;
+    private List<ActivityDto> availableActivities = new();
+    private List<AiRecommendationDto> recommendations = new();
+    private bool isLoading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        availableActivities = await ApiClient.GetActivitiesAsync();
+    }
+
+    private async Task GetRecommendations()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        var request = new AiRecommendationRequestDto
+        {
+            Activities = selectedActivities.ToList(),
+            Region = selectedRegion,
+            PreferenceText = preferenceText
+        };
+
+        recommendations = await ApiClient.GetRecommendationsAsync(request);
+        
+        isLoading = false;
+        StateHasChanged();
+    }
+
+    private void ResetRecommendations()
+    {
+        recommendations = new List<AiRecommendationDto>();
+        StateHasChanged();
+    }
+
+    private void NavigateToPark(int parkId)
+    {
+        Navigation.NavigateTo($"/parks/{parkId}");
+    }
+}

@@ -1,0 +1,653 @@
+[
+  {
+    "name": "Algonquin Provincial Park",
+    "description": "Ontario's most famous park, Algonquin is a vast wilderness of maple hills, rocky ridges, and over 2,400 lakes. Known for incredible canoeing, wildlife viewing including moose and wolves, and stunning fall colors. This iconic park offers both backcountry adventure and accessible camping.",
+    "location": "Whitney, Ontario",
+    "latitude": 45.5543,
+    "longitude": -78.2604,
+    "website": "https://www.ontarioparks.com/park/algonquin",
+    "isFeatured": true,
+    "region": "Algonquin Region",
+    "activities": ["Hiking", "Camping", "Canoeing", "Kayaking", "Fishing", "Cross-Country Skiing", "Snowshoeing", "Backpacking", "Wildlife Viewing", "Bird Watching"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/algonquin1/800/400",
+        "altText": "Canoe on a pristine lake in Algonquin Provincial Park"
+      },
+      {
+        "url": "https://picsum.photos/seed/algonquin2/800/400",
+        "altText": "Fall colors reflecting on water in Algonquin"
+      }
+    ]
+  },
+  {
+    "name": "Killarney Provincial Park",
+    "description": "Famous for its stunning white quartzite ridges, crystal-clear lakes, and pink granite shores immortalized by the Group of Seven painters. The La Cloche Mountains offer spectacular hiking with panoramic views. A paddler's paradise with some of Ontario's clearest waters.",
+    "location": "Killarney, Ontario",
+    "latitude": 46.0097,
+    "longitude": -81.3931,
+    "website": "https://www.ontarioparks.com/park/killarney",
+    "isFeatured": true,
+    "region": "Georgian Bay Region",
+    "activities": ["Hiking", "Camping", "Canoeing", "Kayaking", "Fishing", "Swimming", "Backpacking", "Rock Climbing", "Wildlife Viewing", "Bird Watching"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/killarney1/800/400",
+        "altText": "White quartzite ridges of the La Cloche Mountains"
+      },
+      {
+        "url": "https://picsum.photos/seed/killarney2/800/400",
+        "altText": "Crystal clear waters of George Lake, Killarney"
+      }
+    ]
+  },
+  {
+    "name": "Sandbanks Provincial Park",
+    "description": "Home to the world's largest freshwater baymouth barrier dune formation and massive sand dunes. The park features beautiful sandy beaches on Lake Ontario, perfect for swimming and sunbathing. Popular with families for its warm, shallow waters and picturesque West Lake.",
+    "location": "Picton, Ontario",
+    "latitude": 43.9067,
+    "longitude": -77.2394,
+    "website": "https://www.ontarioparks.com/park/sandbanks",
+    "isFeatured": true,
+    "region": "Southeast Region",
+    "activities": ["Swimming", "Camping", "Hiking", "Picnicking", "Bird Watching", "Kayaking", "Boating"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/sandbanks1/800/400",
+        "altText": "Sandy beaches and dunes at Sandbanks Provincial Park"
+      },
+      {
+        "url": "https://picsum.photos/seed/sandbanks2/800/400",
+        "altText": "Sunset over West Lake at Sandbanks"
+      }
+    ]
+  },
+  {
+    "name": "Presqu'ile Provincial Park",
+    "description": "A limestone peninsula jutting into Lake Ontario, renowned as one of Ontario's premier bird watching destinations with over 330 species recorded. Features sandy beaches, a historic lighthouse, and important wetland habitats. Excellent for swimming and nature interpretation programs.",
+    "location": "Brighton, Ontario",
+    "latitude": 44.0042,
+    "longitude": -77.7439,
+    "website": "https://www.ontarioparks.com/park/presquile",
+    "isFeatured": true,
+    "region": "Southeast Region",
+    "activities": ["Bird Watching", "Swimming", "Camping", "Hiking", "Picnicking", "Wildlife Viewing", "Kayaking", "Fishing"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/presquile1/800/400",
+        "altText": "Historic lighthouse at Presqu'ile Provincial Park"
+      },
+      {
+        "url": "https://picsum.photos/seed/presquile2/800/400",
+        "altText": "Bird watchers on the marsh boardwalk"
+      }
+    ]
+  },
+  {
+    "name": "Bon Echo Provincial Park",
+    "description": "Dominated by the massive Mazinaw Rock, a 100-meter-high cliff face rising from Mazinaw Lake featuring over 260 Indigenous pictographs. This dramatic landscape offers excellent rock climbing, deep-water paddling, and cultural heritage experiences. Named after the remarkable echo that bounces off the cliff.",
+    "location": "Cloyne, Ontario",
+    "latitude": 44.8897,
+    "longitude": -77.1964,
+    "website": "https://www.ontarioparks.com/park/bonecho",
+    "isFeatured": true,
+    "region": "Rideau Region",
+    "activities": ["Camping", "Canoeing", "Kayaking", "Hiking", "Rock Climbing", "Swimming", "Fishing", "Boating"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/bonecho1/800/400",
+        "altText": "Mazinaw Rock rising from the lake at Bon Echo"
+      },
+      {
+        "url": "https://picsum.photos/seed/bonecho2/800/400",
+        "altText": "Indigenous pictographs on the cliff face"
+      }
+    ]
+  },
+  {
+    "name": "Arrowhead Provincial Park",
+    "description": "A four-season destination known for its spectacular fall colors and winter activities. Features excellent cross-country skiing trails and a popular skating trail on Arrowhead Lake. In summer, enjoy swimming, hiking, and exploring the scenic Stubb's Falls along the park's nature trails.",
+    "location": "Huntsville, Ontario",
+    "latitude": 45.3897,
+    "longitude": -79.2142,
+    "website": "https://www.ontarioparks.com/park/arrowhead",
+    "isFeatured": true,
+    "region": "Cottage Country",
+    "activities": ["Cross-Country Skiing", "Snowshoeing", "Hiking", "Swimming", "Camping", "Picnicking", "Mountain Biking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/arrowhead1/800/400",
+        "altText": "Ice skating trail on Arrowhead Lake in winter"
+      },
+      {
+        "url": "https://picsum.photos/seed/arrowhead2/800/400",
+        "altText": "Stubb's Falls surrounded by autumn colors"
+      }
+    ]
+  },
+  {
+    "name": "Pinery Provincial Park",
+    "description": "Protects one of the last remaining oak savanna and dune ecosystems in Ontario along Lake Huron's southeastern shore. Miles of sandy beaches, rare Karner Blue butterfly habitat, and diverse ecosystems. Excellent for swimming, birding, and learning about unique Ontario ecology.",
+    "location": "Grand Bend, Ontario",
+    "latitude": 43.2517,
+    "longitude": -81.8328,
+    "website": "https://www.ontarioparks.com/park/pinery",
+    "isFeatured": false,
+    "region": "Southwest Region",
+    "activities": ["Swimming", "Camping", "Hiking", "Bird Watching", "Mountain Biking", "Cross-Country Skiing", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/pinery1/800/400",
+        "altText": "Sandy beach along Lake Huron at Pinery"
+      },
+      {
+        "url": "https://picsum.photos/seed/pinery2/800/400",
+        "altText": "Oak savanna ecosystem with hiking trail"
+      }
+    ]
+  },
+  {
+    "name": "Grundy Lake Provincial Park",
+    "description": "A hidden gem offering classic Canadian Shield landscape with rocky outcrops, forests, and pristine lakes. Less crowded than nearby parks, it's perfect for peaceful canoeing and backcountry camping. The park provides excellent access to wildlife viewing and northern wilderness experiences.",
+    "location": "Britt, Ontario",
+    "latitude": 45.9667,
+    "longitude": -80.5500,
+    "website": "https://www.ontarioparks.com/park/grundylake",
+    "isFeatured": false,
+    "region": "Near North",
+    "activities": ["Camping", "Canoeing", "Kayaking", "Swimming", "Hiking", "Fishing", "Wildlife Viewing", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/grundylake1/800/400",
+        "altText": "Rocky Canadian Shield shoreline at Grundy Lake"
+      },
+      {
+        "url": "https://picsum.photos/seed/grundylake2/800/400",
+        "altText": "Peaceful canoeing on Grundy Lake"
+      }
+    ]
+  },
+  {
+    "name": "Lake Superior Provincial Park",
+    "description": "A rugged wilderness park along the spectacular northeastern shore of Lake Superior. Features dramatic coastal cliffs, pristine rivers, and the famous Group of Seven landscapes. Offers both roadside camping and extensive backcountry trails through boreal forest and along rocky shorelines.",
+    "location": "Wawa, Ontario",
+    "latitude": 47.5833,
+    "longitude": -84.7500,
+    "website": "https://www.ontarioparks.com/park/lakesuperior",
+    "isFeatured": false,
+    "region": "Northwest Region",
+    "activities": ["Hiking", "Camping", "Backpacking", "Canoeing", "Kayaking", "Fishing", "Wildlife Viewing", "Swimming"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/lakesuperior1/800/400",
+        "altText": "Coastal cliffs along Lake Superior shoreline"
+      },
+      {
+        "url": "https://picsum.photos/seed/lakesuperior2/800/400",
+        "altText": "Sunset over Lake Superior from the park"
+      }
+    ]
+  },
+  {
+    "name": "Killbear Provincial Park",
+    "description": "Located on Georgian Bay's stunning eastern shore, Killbear features pink granite rocks, windswept pines, and crystal-clear waters. The park's unique landscape and incredible sunsets make it a photographer's dream. Popular for family camping with excellent swimming beaches and paddling opportunities.",
+    "location": "Nobel, Ontario",
+    "latitude": 45.3567,
+    "longitude": -80.2122,
+    "website": "https://www.ontarioparks.com/park/killbear",
+    "isFeatured": false,
+    "region": "Georgian Bay Region",
+    "activities": ["Swimming", "Camping", "Kayaking", "Canoeing", "Hiking", "Fishing", "Picnicking", "Boating"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/killbear1/800/400",
+        "altText": "Pink granite rocks and Georgian Bay waters at Killbear"
+      },
+      {
+        "url": "https://picsum.photos/seed/killbear2/800/400",
+        "altText": "Sunset through windswept pines at Killbear"
+      }
+    ]
+  },
+  {
+    "name": "Frontenac Provincial Park",
+    "description": "A backcountry canoe and hiking park protecting ancient Frontenac Arch landscape connecting the Canadian Shield to the Adirondacks. Over 160 backcountry campsites accessible by canoe or on foot. Known for excellent wildlife viewing including black bears, loons, and diverse bird species.",
+    "location": "Sydenham, Ontario",
+    "latitude": 44.5167,
+    "longitude": -76.5500,
+    "website": "https://www.ontarioparks.com/park/frontenac",
+    "isFeatured": false,
+    "region": "Rideau Region",
+    "activities": ["Backpacking", "Canoeing", "Hiking", "Camping", "Fishing", "Wildlife Viewing", "Bird Watching", "Cross-Country Skiing"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/frontenac1/800/400",
+        "altText": "Backcountry lake and campsite in Frontenac"
+      },
+      {
+        "url": "https://picsum.photos/seed/frontenac2/800/400",
+        "altText": "Hiking trail through Frontenac Arch landscape"
+      }
+    ]
+  },
+  {
+    "name": "Silent Lake Provincial Park",
+    "description": "A peaceful wilderness park perfect for paddlers and hikers seeking tranquility. The park's crown jewel is Silent Lake itself, surrounded by hardwood forests with excellent fall colors. No motorboats allowed, ensuring a serene wilderness experience for canoers and kayakers.",
+    "location": "Bancroft, Ontario",
+    "latitude": 45.0500,
+    "longitude": -77.7333,
+    "website": "https://www.ontarioparks.com/park/silentlake",
+    "isFeatured": false,
+    "region": "Highlands Region",
+    "activities": ["Canoeing", "Kayaking", "Camping", "Hiking", "Swimming", "Fishing", "Cross-Country Skiing", "Snowshoeing"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/silentlake1/800/400",
+        "altText": "Peaceful morning mist on Silent Lake"
+      },
+      {
+        "url": "https://picsum.photos/seed/silentlake2/800/400",
+        "altText": "Canoe gliding across calm Silent Lake waters"
+      }
+    ]
+  },
+  {
+    "name": "Petroglyphs Provincial Park",
+    "description": "Home to the largest concentration of Indigenous rock carvings in Canada, with over 900 petroglyphs carved into marble bedrock. This sacred site offers cultural education and spiritual significance. The Teaching Rocks are protected under a modern pavilion while maintaining their sacred atmosphere.",
+    "location": "Woodview, Ontario",
+    "latitude": 44.6167,
+    "longitude": -78.0500,
+    "website": "https://www.ontarioparks.com/park/petroglyphs",
+    "isFeatured": false,
+    "region": "Kawarthas Region",
+    "activities": ["Hiking", "Bird Watching", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/petroglyphs1/800/400",
+        "altText": "Indigenous petroglyphs at the Teaching Rocks"
+      },
+      {
+        "url": "https://picsum.photos/seed/petroglyphs2/800/400",
+        "altText": "Educational pavilion protecting the ancient carvings"
+      }
+    ]
+  },
+  {
+    "name": "Quetico Provincial Park",
+    "description": "One of North America's premier wilderness canoe parks, protecting vast boreal forests and pristine waterways along the Minnesota border. Famous for world-class boundary waters canoeing, fishing, and complete wilderness immersion. Over 2,000 campsites accessible only by canoe.",
+    "location": "Atikokan, Ontario",
+    "latitude": 48.4667,
+    "longitude": -91.1833,
+    "website": "https://www.ontarioparks.com/park/quetico",
+    "isFeatured": false,
+    "region": "Northwest Region",
+    "activities": ["Canoeing", "Backpacking", "Camping", "Fishing", "Wildlife Viewing", "Hiking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/quetico1/800/400",
+        "altText": "Wilderness canoe route in Quetico Provincial Park"
+      },
+      {
+        "url": "https://picsum.photos/seed/quetico2/800/400",
+        "altText": "Backcountry campsite on a pristine Quetico lake"
+      }
+    ]
+  },
+  {
+    "name": "Sleeping Giant Provincial Park",
+    "description": "Featuring the iconic Sleeping Giant formation - a massive cliff resembling a reclining giant - on the Sibley Peninsula. Offers stunning views of Lake Superior, challenging hiking including the famous Top of the Giant trail. Rich in Indigenous legends and natural beauty.",
+    "location": "Pass Lake, Ontario",
+    "latitude": 48.5333,
+    "longitude": -88.8167,
+    "website": "https://www.ontarioparks.com/park/sleepinggiant",
+    "isFeatured": false,
+    "region": "Northwest Region",
+    "activities": ["Hiking", "Backpacking", "Camping", "Fishing", "Wildlife Viewing", "Bird Watching", "Cross-Country Skiing"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/sleepinggiant1/800/400",
+        "altText": "The Sleeping Giant formation viewed from Lake Superior"
+      },
+      {
+        "url": "https://picsum.photos/seed/sleepinggiant2/800/400",
+        "altText": "Panoramic view from the Top of the Giant trail"
+      }
+    ]
+  },
+  {
+    "name": "Awenda Provincial Park",
+    "description": "Located on Georgian Bay's Penetanguishene Peninsula, featuring beautiful sandy beaches, coastal dunes, and diverse forests. The park offers exceptional bird watching, particularly during migration seasons. Family-friendly with great swimming and accessible hiking trails through unique ecosystems.",
+    "location": "Penetanguishene, Ontario",
+    "latitude": 44.8167,
+    "longitude": -80.0000,
+    "website": "https://www.ontarioparks.com/park/awenda",
+    "isFeatured": false,
+    "region": "Georgian Bay Region",
+    "activities": ["Swimming", "Hiking", "Camping", "Bird Watching", "Mountain Biking", "Cross-Country Skiing", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/awenda1/800/400",
+        "altText": "Sandy beach on Georgian Bay at Awenda"
+      },
+      {
+        "url": "https://picsum.photos/seed/awenda2/800/400",
+        "altText": "Forest trail through diverse ecosystems"
+      }
+    ]
+  },
+  {
+    "name": "Algonquin Highlands",
+    "description": "A constellation of smaller parks including Oxtongue River-Ragged Falls showcasing powerful waterfalls and classic Muskoka landscape. Features beautiful hiking trails to scenic waterfalls and pristine river environments. Perfect for day trips and nature photography.",
+    "location": "Dwight, Ontario",
+    "latitude": 45.2667,
+    "longitude": -78.9500,
+    "website": "https://www.ontarioparks.com/park/oxtongueriverraggedfalls",
+    "isFeatured": false,
+    "region": "Algonquin Region",
+    "activities": ["Hiking", "Picnicking", "Bird Watching", "Wildlife Viewing", "Fishing"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/raggedfalls1/800/400",
+        "altText": "Ragged Falls cascading through the forest"
+      },
+      {
+        "url": "https://picsum.photos/seed/raggedfalls2/800/400",
+        "altText": "Hiking trail along the Oxtongue River"
+      }
+    ]
+  },
+  {
+    "name": "Rushing River Provincial Park",
+    "description": "Named for the rushing waterways flowing through the park, offering excellent opportunities for canoeing and fishing. Features beautiful forest trails, sandy beaches, and family-friendly camping. The park's rivers and lakes are perfect for paddling adventures.",
+    "location": "Kenora, Ontario",
+    "latitude": 49.8500,
+    "longitude": -94.3333,
+    "website": "https://www.ontarioparks.com/park/rushingriver",
+    "isFeatured": false,
+    "region": "Northwest Region",
+    "activities": ["Camping", "Canoeing", "Kayaking", "Swimming", "Fishing", "Hiking", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/rushingriver1/800/400",
+        "altText": "Rapids on the rushing river"
+      },
+      {
+        "url": "https://picsum.photos/seed/rushingriver2/800/400",
+        "altText": "Sandy beach and calm waters for swimming"
+      }
+    ]
+  },
+  {
+    "name": "MacGregor Point Provincial Park",
+    "description": "A Lake Huron shoreline park known for its incredible dark skies and astronomy programs. Features sandy beaches, diverse trails through coastal forests and wetlands, and excellent bird watching. The park is a designated Dark Sky Preserve offering spectacular stargazing.",
+    "location": "Port Elgin, Ontario",
+    "latitude": 44.4500,
+    "longitude": -81.4667,
+    "website": "https://www.ontarioparks.com/park/macgregorpoint",
+    "isFeatured": false,
+    "region": "Southwest Region",
+    "activities": ["Swimming", "Camping", "Hiking", "Bird Watching", "Mountain Biking", "Cross-Country Skiing", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/macgregor1/800/400",
+        "altText": "Starry night sky at MacGregor Point Dark Sky Preserve"
+      },
+      {
+        "url": "https://picsum.photos/seed/macgregor2/800/400",
+        "altText": "Lake Huron beach at sunset"
+      }
+    ]
+  },
+  {
+    "name": "Charleston Lake Provincial Park",
+    "description": "A beautiful park featuring clear blue-green waters perfect for swimming and boating. The rugged Canadian Shield landscape meets southern hardwood forests creating unique biodiversity. Excellent hiking trails offer scenic lookouts over the lake and surrounding wilderness.",
+    "location": "Lansdowne, Ontario",
+    "latitude": 44.5000,
+    "longitude": -76.0500,
+    "website": "https://www.ontarioparks.com/park/charlestonlake",
+    "isFeatured": false,
+    "region": "Rideau Region",
+    "activities": ["Swimming", "Camping", "Hiking", "Canoeing", "Kayaking", "Fishing", "Boating", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/charleston1/800/400",
+        "altText": "Clear blue-green waters of Charleston Lake"
+      },
+      {
+        "url": "https://picsum.photos/seed/charleston2/800/400",
+        "altText": "Scenic lookout over Charleston Lake"
+      }
+    ]
+  },
+  {
+    "name": "Kawartha Highlands Provincial Park",
+    "description": "Ontario's second-largest park offering extensive backcountry wilderness experiences. Features hundreds of pristine lakes connected by canoe routes and hiking trails. Perfect for multi-day paddling trips and wilderness camping in a landscape rich with Canadian Shield beauty.",
+    "location": "Bancroft, Ontario",
+    "latitude": 44.9833,
+    "longitude": -77.9167,
+    "website": "https://www.ontarioparks.com/park/kawarthahighlands",
+    "isFeatured": false,
+    "region": "Kawarthas Region",
+    "activities": ["Backpacking", "Canoeing", "Camping", "Hiking", "Fishing", "Wildlife Viewing", "Kayaking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/kawarthahighlands1/800/400",
+        "altText": "Wilderness lake in Kawartha Highlands"
+      },
+      {
+        "url": "https://picsum.photos/seed/kawarthahighlands2/800/400",
+        "altText": "Backcountry canoe route through pristine landscape"
+      }
+    ]
+  },
+  {
+    "name": "Missisagi Provincial Park",
+    "description": "A wilderness park featuring the scenic Mississagi River and beautiful Semiwite Lake. Offers remote camping experiences with excellent canoeing and kayaking opportunities. The park protects important boreal forest habitat and provides true northern Ontario wilderness adventure.",
+    "location": "Elliot Lake, Ontario",
+    "latitude": 46.3667,
+    "longitude": -82.8833,
+    "website": "https://www.ontarioparks.com/park/missisagi",
+    "isFeatured": false,
+    "region": "Near North",
+    "activities": ["Camping", "Canoeing", "Kayaking", "Fishing", "Hiking", "Swimming", "Wildlife Viewing"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/missisagi1/800/400",
+        "altText": "Mississagi River flowing through the park"
+      },
+      {
+        "url": "https://picsum.photos/seed/missisagi2/800/400",
+        "altText": "Semiwite Lake at dawn"
+      }
+    ]
+  },
+  {
+    "name": "Balsam Lake Provincial Park",
+    "description": "Located in the heart of the Kawarthas on Ontario's highest lake, offering excellent fishing and boating. Features beautiful sandy beaches and family-friendly camping. The park's elevation provides cooler summer temperatures and stunning panoramic views of the surrounding landscape.",
+    "location": "Coboconk, Ontario",
+    "latitude": 44.5833,
+    "longitude": -78.8000,
+    "website": "https://www.ontarioparks.com/park/balsamlake",
+    "isFeatured": false,
+    "region": "Kawarthas Region",
+    "activities": ["Swimming", "Camping", "Boating", "Fishing", "Hiking", "Picnicking", "Kayaking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/balsamlake1/800/400",
+        "altText": "Sandy beach on Balsam Lake"
+      },
+      {
+        "url": "https://picsum.photos/seed/balsamlake2/800/400",
+        "altText": "Sunset over Ontario's highest lake"
+      }
+    ]
+  },
+  {
+    "name": "Rondeau Provincial Park",
+    "description": "A Carolinian forest haven on Lake Erie featuring rare plant and animal species found nowhere else in Canada. One of Ontario's premier bird watching destinations with over 330 species recorded. Beautiful beaches, unique ecosystem diversity, and important monarch butterfly migration stopover.",
+    "location": "Morpeth, Ontario",
+    "latitude": 42.2667,
+    "longitude": -81.8500,
+    "website": "https://www.ontarioparks.com/park/rondeau",
+    "isFeatured": false,
+    "region": "Southwest Region",
+    "activities": ["Bird Watching", "Camping", "Hiking", "Swimming", "Kayaking", "Fishing", "Wildlife Viewing", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/rondeau1/800/400",
+        "altText": "Rare Carolinian forest in Rondeau"
+      },
+      {
+        "url": "https://picsum.photos/seed/rondeau2/800/400",
+        "altText": "Lake Erie beach at Rondeau Provincial Park"
+      }
+    ]
+  },
+  {
+    "name": "Obabika River Provincial Park",
+    "description": "A pristine wilderness waterway park protecting the Obabika River system and surrounding forests. Perfect for backcountry canoe trips with numerous portages and remote campsites. The park offers true wilderness solitude and excellent fishing in crystal-clear waters.",
+    "location": "Temagami, Ontario",
+    "latitude": 46.9667,
+    "longitude": -80.0833,
+    "website": "https://www.ontarioparks.com/park/obabikariver",
+    "isFeatured": false,
+    "region": "Near North",
+    "activities": ["Canoeing", "Backpacking", "Camping", "Fishing", "Wildlife Viewing", "Kayaking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/obabika1/800/400",
+        "altText": "Obabika River winding through wilderness"
+      },
+      {
+        "url": "https://picsum.photos/seed/obabika2/800/400",
+        "altText": "Remote backcountry campsite on the Obabika"
+      }
+    ]
+  },
+  {
+    "name": "Sharbot Lake Provincial Park",
+    "description": "A smaller park offering peaceful camping on the shores of Sharbot Lake. Features excellent swimming, boating, and fishing opportunities. The park provides a quiet retreat with beautiful sunset views and easy access to nearby communities for supplies.",
+    "location": "Sharbot Lake, Ontario",
+    "latitude": 44.7667,
+    "longitude": -76.7167,
+    "website": "https://www.ontarioparks.com/park/sharbotlake",
+    "isFeatured": false,
+    "region": "Rideau Region",
+    "activities": ["Camping", "Swimming", "Boating", "Fishing", "Kayaking", "Canoeing", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/sharbotlake1/800/400",
+        "altText": "Peaceful waters of Sharbot Lake at sunset"
+      },
+      {
+        "url": "https://picsum.photos/seed/sharbotlake2/800/400",
+        "altText": "Family camping area near the lake"
+      }
+    ]
+  },
+  {
+    "name": "Neys Provincial Park",
+    "description": "Located on Lake Superior's rugged north shore, featuring dramatic coastal scenery and pristine wilderness beaches. The park is home to a unique woodland caribou herd. Offers excellent hiking along the superior shoreline with stunning views and opportunities to spot caribou.",
+    "location": "Marathon, Ontario",
+    "latitude": 48.7333,
+    "longitude": -86.3000,
+    "website": "https://www.ontarioparks.com/park/neys",
+    "isFeatured": false,
+    "region": "Northwest Region",
+    "activities": ["Hiking", "Camping", "Wildlife Viewing", "Swimming", "Fishing", "Bird Watching", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/neys1/800/400",
+        "altText": "Woodland caribou on Lake Superior shore"
+      },
+      {
+        "url": "https://picsum.photos/seed/neys2/800/400",
+        "altText": "Dramatic coastal cliffs at Neys"
+      }
+    ]
+  },
+  {
+    "name": "Bronte Creek Provincial Park",
+    "description": "A unique park near Toronto featuring both natural and agricultural heritage with a working heritage farm. Great trails for hiking and mountain biking through ravines and meadows. Popular for family activities including a large pool and play barn, plus excellent cross-country skiing in winter.",
+    "location": "Oakville, Ontario",
+    "latitude": 43.4167,
+    "longitude": -79.7667,
+    "website": "https://www.ontarioparks.com/park/brontecreek",
+    "isFeatured": false,
+    "region": "Greater Toronto Area",
+    "activities": ["Hiking", "Mountain Biking", "Camping", "Swimming", "Cross-Country Skiing", "Picnicking", "Bird Watching"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/brontecreek1/800/400",
+        "altText": "Heritage farm at Bronte Creek Provincial Park"
+      },
+      {
+        "url": "https://picsum.photos/seed/brontecreek2/800/400",
+        "altText": "Trails through ravines and forest"
+      }
+    ]
+  },
+  {
+    "name": "Halfway Lake Provincial Park",
+    "description": "A peaceful retreat featuring a beautiful lake surrounded by boreal forest. Excellent for family camping with great swimming beaches and calm waters perfect for canoeing. The park offers well-maintained trails and a serene atmosphere away from crowds.",
+    "location": "Sudbury, Ontario",
+    "latitude": 46.7167,
+    "longitude": -81.3667,
+    "website": "https://www.ontarioparks.com/park/halfwaylake",
+    "isFeatured": false,
+    "region": "Near North",
+    "activities": ["Swimming", "Camping", "Canoeing", "Kayaking", "Hiking", "Fishing", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/halfwaylake1/800/400",
+        "altText": "Calm waters of Halfway Lake for swimming"
+      },
+      {
+        "url": "https://picsum.photos/seed/halfwaylake2/800/400",
+        "altText": "Forest trail around Halfway Lake"
+      }
+    ]
+  },
+  {
+    "name": "Wasaga Beach Provincial Park",
+    "description": "Home to the world's longest freshwater beach stretching 14 kilometers along Georgian Bay's Nottawasaga Bay. Features warm, shallow waters perfect for families and beautiful sandy shores. Popular destination for beach activities, water sports, and summer recreation.",
+    "location": "Wasaga Beach, Ontario",
+    "latitude": 44.5167,
+    "longitude": -80.0167,
+    "website": "https://www.ontarioparks.com/park/wasagabeach",
+    "isFeatured": false,
+    "region": "Georgian Bay Region",
+    "activities": ["Swimming", "Picnicking", "Beach Volleyball", "Kayaking", "Bird Watching", "Hiking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/wasagabeach1/800/400",
+        "altText": "World's longest freshwater beach at Wasaga"
+      },
+      {
+        "url": "https://picsum.photos/seed/wasagabeach2/800/400",
+        "altText": "Families enjoying the warm shallow waters"
+      }
+    ]
+  },
+  {
+    "name": "Earl Rowe Provincial Park",
+    "description": "A family-oriented park located near Toronto featuring a large reservoir for swimming and boating. Offers diverse recreational opportunities including disc golf, extensive trails, and a popular beach. Well-maintained campground makes it perfect for weekend getaways from the city.",
+    "location": "Alliston, Ontario",
+    "latitude": 44.1333,
+    "longitude": -79.8667,
+    "website": "https://www.ontarioparks.com/park/earlrowe",
+    "isFeatured": false,
+    "region": "Greater Toronto Area",
+    "activities": ["Swimming", "Camping", "Hiking", "Boating", "Fishing", "Mountain Biking", "Picnicking"],
+    "images": [
+      {
+        "url": "https://picsum.photos/seed/earlrowe1/800/400",
+        "altText": "Reservoir beach at Earl Rowe Provincial Park"
+      },
+      {
+        "url": "https://picsum.photos/seed/earlrowe2/800/400",
+        "altText": "Disc golf course through forest trails"
+      }
+    ]
+  }
+]

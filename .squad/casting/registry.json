@@ -39,6 +39,14 @@
       "created_at": "2026-03-28T12:27:00Z",
       "legacy_named": false,
       "status": "active"
+    },
+    "hammond": {
+      "persistent_name": "Hammond",
+      "universe": "Jurassic Park",
+      "role": "Aspire Expert",
+      "created_at": "2026-03-28T12:38:00Z",
+      "legacy_named": false,
+      "status": "active"
     }
   }
 }

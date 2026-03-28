@@ -10,6 +10,7 @@ How to decide who handles what.
 | Backend APIs, data models, EF Core, SQLite | Arnold | Controllers, services, DbContext, migrations, seed data, API contracts |
 | Blazor UI, React UI, frontend components | Sattler | Blazor pages, React components, map visualization, client-side state |
 | Copilot SDK, AI features, prompts | Grant | AI endpoints, prompt templates, park summaries, recommendations, Q&A |
+| Aspire, orchestration, service discovery, health checks, dashboard | Hammond | AppHost config, integrations, CLI workflows, deployment model |
 | Code review | Malcolm | Review PRs, check quality, architectural alignment |
 | Testing | Muldoon | Write tests, find edge cases, verify fixes, quality gates |
 | Scope & priorities | Malcolm | What to build next, trade-offs, decisions |

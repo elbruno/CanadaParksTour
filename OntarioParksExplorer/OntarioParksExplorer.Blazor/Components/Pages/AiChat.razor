@@ -1,0 +1,162 @@
+@page "/chat"
+@using OntarioParksExplorer.Blazor.Models
+@using OntarioParksExplorer.Blazor.Services
+@inject ParksApiClient ApiClient
+@rendermode InteractiveServer
+
+<PageTitle>AI Chat - Ontario Parks Explorer</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudText Typo="Typo.h3" Class="mb-4">
+        <MudIcon Icon="@Icons.Material.Filled.Chat" Class="mr-2" />
+        AI Parks Assistant
+    </MudText>
+
+    <MudPaper Class="pa-4" Style="height: 600px; display: flex; flex-direction: column;">
+        <div style="flex: 1; overflow-y: auto; margin-bottom: 1rem;" id="chatContainer">
+            @if (messages.Count == 0)
+            {
+                <MudAlert Severity="Severity.Info" Icon="@Icons.Material.Filled.Info">
+                    <MudText Typo="Typo.body1">
+                        Welcome! I'm your AI assistant for Ontario Parks. Ask me anything about parks, activities, 
+                        recommendations, or planning your visit!
+                    </MudText>
+                </MudAlert>
+            }
+            else
+            {
+                <MudStack Spacing="3">
+                    @foreach (var message in messages)
+                    {
+                        <div style="@GetMessageStyle(message.Role)">
+                            <MudPaper Class="pa-3" Elevation="1" Style="@GetPaperStyle(message.Role)">
+                                <MudText Typo="Typo.caption" Color="Color.Secondary" Class="mb-1">
+                                    @(message.Role == "user" ? "You" : "AI Assistant")
+                                </MudText>
+                                <MudText Typo="Typo.body1" Style="white-space: pre-wrap;">@message.Content</MudText>
+                            </MudPaper>
+                        </div>
+                    }
+                </MudStack>
+            }
+
+            @if (isLoading)
+            {
+                <div style="display: flex; justify-content: flex-start; margin-top: 1rem;">
+                    <MudPaper Class="pa-3" Elevation="1" Style="background-color: #f5f5f5;">
+                        <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="ml-2" Style="display: inline;">
+                            AI is thinking...
+                        </MudText>
+                    </MudPaper>
+                </div>
+            }
+        </div>
+
+        <MudDivider Class="mb-3" />
+
+        <div style="display: flex; gap: 0.5rem;">
+            <MudTextField @bind-Value="currentMessage" 
+                         Label="Type your message..." 
+                         Variant="Variant.Outlined"
+                         Lines="2"
+                         @onkeydown="HandleKeyPress"
+                         Disabled="@isLoading"
+                         Style="flex: 1;" />
+            <MudButton Variant="Variant.Filled" 
+                      Color="Color.Primary" 
+                      OnClick="SendMessage"
+                      Disabled="@(isLoading || string.IsNullOrWhiteSpace(currentMessage))"
+                      StartIcon="@Icons.Material.Filled.Send"
+                      Style="align-self: flex-end;">
+                Send
+            </MudButton>
+        </div>
+
+        @if (messages.Count > 0)
+        {
+            <MudButton Variant="Variant.Text" 
+                      Color="Color.Secondary" 
+                      OnClick="ClearChat"
+                      StartIcon="@Icons.Material.Filled.Delete"
+                      Size="Size.Small"
+                      Class="mt-2">
+                Clear Chat
+            </MudButton>
+        }
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private List<ChatMessageDto> messages = new();
+    private string currentMessage = string.Empty;
+    private bool isLoading = false;
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(currentMessage))
+            return;
+
+        var userMessage = currentMessage;
+        currentMessage = string.Empty;
+
+        messages.Add(new ChatMessageDto
+        {
+            Role = "user",
+            Content = userMessage
+        });
+
+        isLoading = true;
+        StateHasChanged();
+
+        var response = await ApiClient.ChatAsync(userMessage, messages);
+
+        if (!string.IsNullOrEmpty(response))
+        {
+            messages.Add(new ChatMessageDto
+            {
+                Role = "assistant",
+                Content = response
+            });
+        }
+        else
+        {
+            messages.Add(new ChatMessageDto
+            {
+                Role = "assistant",
+                Content = "I'm sorry, I encountered an error. Please try again."
+            });
+        }
+
+        isLoading = false;
+        StateHasChanged();
+    }
+
+    private void ClearChat()
+    {
+        messages.Clear();
+        StateHasChanged();
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !e.ShiftKey)
+        {
+            await SendMessage();
+        }
+    }
+
+    private string GetMessageStyle(string role)
+    {
+        return role == "user" 
+            ? "display: flex; justify-content: flex-end; margin-bottom: 0.5rem;" 
+            : "display: flex; justify-content: flex-start; margin-bottom: 0.5rem;";
+    }
+
+    private string GetPaperStyle(string role)
+    {
+        return role == "user" 
+            ? "background-color: #1976d2; color: white; max-width: 70%;" 
+            : "background-color: #f5f5f5; max-width: 70%;";
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "ontarioparksexplorer-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/leaflet": "^1.9.21",
+    "@vitejs/plugin-react": "^6.0.1",
+    "jsdom": "^29.0.1",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.1",
+    "vitest": "^4.1.2"
+  },
+  "dependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "axios": "^1.14.0",
+    "leaflet": "^1.9.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-leaflet": "^5.0.0",
+    "react-router-dom": "^7.13.2"
+  }
+}

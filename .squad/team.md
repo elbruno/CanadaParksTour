@@ -17,6 +17,7 @@
 | Sattler | Frontend Dev | `.squad/agents/sattler/charter.md` | ⚛️ Active |
 | Grant | AI Dev | `.squad/agents/grant/charter.md` | 🤖 Active |
 | Muldoon | Tester | `.squad/agents/muldoon/charter.md` | 🧪 Active |
+| Hammond | Aspire Expert | `.squad/agents/hammond/charter.md` | ⚙️ Active |
 | Scribe | Session Logger | `.squad/agents/scribe/charter.md` | 📋 Active |
 | Ralph | Work Monitor | — | 🔄 Monitor |
 

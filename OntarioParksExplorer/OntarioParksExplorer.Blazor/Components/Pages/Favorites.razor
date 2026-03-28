@@ -1,0 +1,147 @@
+@page "/favorites"
+@using OntarioParksExplorer.Blazor.Models
+@using OntarioParksExplorer.Blazor.Services
+@inject ParksApiClient ApiClient
+@inject NavigationManager Navigation
+@inject FavoritesService FavoritesService
+@rendermode InteractiveServer
+
+<PageTitle>My Favorites - Ontario Parks Explorer</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+    <MudText Typo="Typo.h3" Class="mb-4">My Favorite Parks</MudText>
+
+    @if (isLoading)
+    {
+        <MudGrid>
+            @for (int i = 0; i < 3; i++)
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCard>
+                        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="200px" />
+                        <MudCardContent>
+                            <MudSkeleton Width="60%" />
+                            <MudSkeleton Width="40%" />
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    else if (favoriteParks.Any())
+    {
+        <MudGrid>
+            @foreach (var park in favoriteParks)
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCard Class="park-card" Style="height: 100%; cursor: pointer;" @onclick="() => NavigateToPark(park.Id)">
+                        @if (!string.IsNullOrEmpty(park.MainImageUrl))
+                        {
+                            <MudCardMedia Image="@park.MainImageUrl" Height="200" />
+                        }
+                        else
+                        {
+                            <div style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                                <MudIcon Icon="@Icons.Material.Filled.Park" Size="Size.Large" Color="Color.Surface" />
+                            </div>
+                        }
+                        <MudCardContent>
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <MudText Typo="Typo.h6">@park.Name</MudText>
+                                @if (park.IsFeatured)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Warning">Featured</MudChip>
+                                }
+                            </div>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@park.Region</MudText>
+                            @if (park.ActivityNames.Any())
+                            {
+                                <MudChipSet T="string" Class="mt-2">
+                                    @foreach (var activity in park.ActivityNames.Take(3))
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Text">@activity</MudChip>
+                                    }
+                                    @if (park.ActivityNames.Count > 3)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Default" Variant="Variant.Text">+@(park.ActivityNames.Count - 3) more</MudChip>
+                                    }
+                                </MudChipSet>
+                            }
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.Favorite"
+                                          Color="Color.Error"
+                                          OnClick="@((MouseEventArgs e) => RemoveFavorite(park.Id))" />
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    else
+    {
+        <MudPaper Class="pa-8" Style="text-align: center;">
+            <MudIcon Icon="@Icons.Material.Outlined.FavoriteBorder" Size="Size.Large" Color="Color.Secondary" Style="font-size: 80px;" Class="mb-4" />
+            <MudText Typo="Typo.h5" Class="mb-2">No Favorite Parks Yet</MudText>
+            <MudText Typo="Typo.body1" Color="Color.Secondary" Class="mb-4">
+                Start exploring and add parks to your favorites by clicking the heart icon.
+            </MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/parks">
+                Browse Parks
+            </MudButton>
+        </MudPaper>
+    }
+</MudContainer>
+
+@code {
+    private List<ParkListDto> favoriteParks = new();
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFavorites();
+    }
+
+    private async Task LoadFavorites()
+    {
+        isLoading = true;
+        var favoriteIds = await FavoritesService.GetFavoritesAsync();
+        
+        var parks = new List<ParkListDto>();
+        foreach (var id in favoriteIds)
+        {
+            var park = await ApiClient.GetParkByIdAsync(id);
+            if (park != null)
+            {
+                parks.Add(new ParkListDto
+                {
+                    Id = park.Id,
+                    Name = park.Name,
+                    Region = park.Region,
+                    IsFeatured = park.IsFeatured,
+                    Latitude = park.Latitude,
+                    Longitude = park.Longitude,
+                    MainImageUrl = park.Images.FirstOrDefault()?.Url,
+                    ActivityNames = park.Activities.Select(a => a.Name).ToList()
+                });
+            }
+        }
+
+        favoriteParks = parks;
+        isLoading = false;
+        StateHasChanged();
+    }
+
+    private void NavigateToPark(int parkId)
+    {
+        Navigation.NavigateTo($"/parks/{parkId}");
+    }
+
+    private async Task RemoveFavorite(int parkId)
+    {
+        await FavoritesService.RemoveFavoriteAsync(parkId);
+        favoriteParks = favoriteParks.Where(p => p.Id != parkId).ToList();
+        StateHasChanged();
+    }
+}
+

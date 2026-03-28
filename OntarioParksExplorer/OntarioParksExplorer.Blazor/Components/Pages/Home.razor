@@ -1,0 +1,68 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Home - Ontario Parks Explorer</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Welcome to Ontario Parks Explorer</MudText>
+
+<MudCard Class="mb-4">
+    <MudCardContent>
+        <MudText Typo="Typo.h5" Class="mb-3">Discover the Natural Beauty of Ontario</MudText>
+        <MudText Typo="Typo.body1" Class="mb-3">
+            Explore Ontario's stunning provincial parks, from pristine wilderness to accessible recreational areas.
+            Plan your next adventure with our comprehensive park information, interactive maps, and personalized favorites.
+        </MudText>
+        <MudText Typo="Typo.body1">
+            Get started by browsing our parks, saving your favorites, or exploring the interactive map view.
+        </MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/parks" StartIcon="@Icons.Material.Filled.Park">
+            Browse Parks
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Href="/map" StartIcon="@Icons.Material.Filled.Map">
+            View Map
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Href="/chat" StartIcon="@Icons.Material.Filled.Chat">
+            AI Chat
+        </MudButton>
+    </MudCardActions>
+</MudCard>
+
+<MudGrid Class="mb-4">
+    <MudItem xs="12" md="4">
+        <MudCard>
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.Search" Size="Size.Large" Color="Color.Primary" Class="mb-2" />
+                <MudText Typo="Typo.h6" Class="mb-2">Browse & Search</MudText>
+                <MudText Typo="Typo.body2">
+                    Find the perfect park for your next outdoor adventure. Filter by activities, amenities, and location.
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" md="4">
+        <MudCard>
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.Favorite" Size="Size.Large" Color="Color.Secondary" Class="mb-2" />
+                <MudText Typo="Typo.h6" Class="mb-2">Save Favorites</MudText>
+                <MudText Typo="Typo.body2">
+                    Keep track of parks you want to visit or have visited. Build your personal collection of favorites.
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" md="4">
+        <MudCard>
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.Map" Size="Size.Large" Color="Color.Tertiary" Class="mb-2" />
+                <MudText Typo="Typo.h6" Class="mb-2">Interactive Maps</MudText>
+                <MudText Typo="Typo.body2">
+                    Explore parks on an interactive map. See locations, distances, and plan your route.
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<RecommendationsWidget />

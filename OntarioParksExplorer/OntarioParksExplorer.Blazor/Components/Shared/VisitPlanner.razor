@@ -1,0 +1,136 @@
+@using OntarioParksExplorer.Blazor.Models
+@using OntarioParksExplorer.Blazor.Services
+@inject ParksApiClient ApiClient
+
+<MudPaper Class="pa-4 mb-4">
+    <MudText Typo="Typo.h5" Class="mb-3">
+        <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Class="mr-2" />
+        Plan Your Visit
+    </MudText>
+
+    @if (visitPlan == null)
+    {
+        <MudGrid>
+            <MudItem xs="12" md="4">
+                <MudNumericField @bind-Value="durationDays" 
+                                Label="Duration (Days)" 
+                                Min="1" 
+                                Max="14" 
+                                Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudSelect T="string" 
+                          @bind-Value="selectedSeason" 
+                          Label="Season" 
+                          Variant="Variant.Outlined"
+                          Clearable="true">
+                    <MudSelectItem T="string" Value="@("Spring")">Spring</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Summer")">Summer</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Fall")">Fall</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("Winter")">Winter</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle2" Class="mb-2">Select Your Interests</MudText>
+                <MudChipSet T="string" SelectionMode="SelectionMode.MultiSelection" @bind-SelectedValues="selectedInterests">
+                    @foreach (var activity in availableActivities)
+                    {
+                        <MudChip T="string" Value="@activity.Name" Color="Color.Primary" Variant="Variant.Outlined">
+                            @activity.Name
+                        </MudChip>
+                    }
+                </MudChipSet>
+            </MudItem>
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" 
+                          Color="Color.Primary" 
+                          OnClick="GenerateVisitPlan"
+                          Disabled="@isGenerating"
+                          StartIcon="@Icons.Material.Filled.AutoAwesome">
+                    @(isGenerating ? "Generating Plan..." : "Generate Visit Plan")
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    }
+    else
+    {
+        <MudStack Spacing="3">
+            <div>
+                <MudText Typo="Typo.h6">@visitPlan.ParkName - @visitPlan.DurationDays Day Visit</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Season: @visitPlan.Season</MudText>
+            </div>
+
+            @foreach (var day in visitPlan.DayPlans)
+            {
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Day @day.Day: @day.Theme</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.body1" Class="mb-2">@day.Description</MudText>
+                        @if (day.Activities.Any())
+                        {
+                            <MudChipSet T="string">
+                                @foreach (var activity in day.Activities)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Secondary">@activity</MudChip>
+                                }
+                            </MudChipSet>
+                        }
+                    </MudCardContent>
+                </MudCard>
+            }
+
+            <MudButton Variant="Variant.Outlined" 
+                      Color="Color.Primary" 
+                      OnClick="ResetPlan"
+                      StartIcon="@Icons.Material.Filled.Refresh">
+                Create New Plan
+            </MudButton>
+        </MudStack>
+    }
+</MudPaper>
+
+@code {
+    [Parameter]
+    public int ParkId { get; set; }
+
+    private int durationDays = 3;
+    private string? selectedSeason;
+    private IReadOnlyCollection<string> selectedInterests { get; set; } = new List<string>();
+    private List<ActivityDto> availableActivities = new();
+    private VisitPlanDto? visitPlan;
+    private bool isGenerating = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        availableActivities = await ApiClient.GetActivitiesAsync();
+    }
+
+    private async Task GenerateVisitPlan()
+    {
+        isGenerating = true;
+        StateHasChanged();
+
+        var request = new AiVisitPlanRequestDto
+        {
+            ParkId = ParkId,
+            DurationDays = durationDays,
+            Interests = selectedInterests.ToList(),
+            Season = selectedSeason
+        };
+
+        visitPlan = await ApiClient.PlanVisitAsync(request);
+        
+        isGenerating = false;
+        StateHasChanged();
+    }
+
+    private void ResetPlan()
+    {
+        visitPlan = null;
+        StateHasChanged();
+    }
+}

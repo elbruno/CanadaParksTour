@@ -1,0 +1,246 @@
+@page "/parks"
+@using OntarioParksExplorer.Blazor.Models
+@using OntarioParksExplorer.Blazor.Services
+@inject ParksApiClient ApiClient
+@inject NavigationManager Navigation
+@inject FavoritesService FavoritesService
+@rendermode InteractiveServer
+
+<PageTitle>Browse Parks - Ontario Parks Explorer</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+    <MudText Typo="Typo.h3" Class="mb-4">Browse Ontario Parks</MudText>
+
+    <MudPaper Class="pa-4 mb-4">
+        <MudGrid>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="searchQuery" 
+                              Label="Search parks" 
+                              Variant="Variant.Outlined" 
+                              Adornment="Adornment.End"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              OnKeyUp="OnSearchKeyUp"
+                              Clearable="true"
+                              OnClearButtonClick="ClearSearch"
+                              aria-label="Search parks by name or description" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudSelect Label="Filter by activities" 
+                           MultiSelection="true"
+                           Variant="Variant.Outlined"
+                           T="string"
+                           @bind-SelectedValues="selectedActivities"
+                           aria-label="Filter parks by activities">
+                    @foreach (var activity in allActivities)
+                    {
+                        <MudSelectItem Value="@activity.Name">@activity.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+        </MudGrid>
+        
+        @if (_selectedActivitiesSet.Any())
+        {
+            <MudChipSet T="string" Class="mt-2">
+                @foreach (var activity in _selectedActivitiesSet)
+                {
+                    <MudChip T="string" OnClose="() => RemoveFilter(activity)" Color="Color.Primary">@activity</MudChip>
+                }
+            </MudChipSet>
+        }
+    </MudPaper>
+
+    @if (isLoading)
+    {
+        <MudGrid>
+            @for (int i = 0; i < 6; i++)
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCard>
+                        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="200px" />
+                        <MudCardContent>
+                            <MudSkeleton Width="60%" />
+                            <MudSkeleton Width="40%" />
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    else if (parks.Any())
+    {
+        <MudGrid>
+            @foreach (var park in parks)
+            {
+                <MudItem xs="12" sm="6" md="4">
+                    <MudCard Class="park-card" Style="height: 100%; cursor: pointer;" @onclick="() => NavigateToPark(park.Id)">
+                        @if (!string.IsNullOrEmpty(park.MainImageUrl))
+                        {
+                            <MudCardMedia Image="@park.MainImageUrl" Height="200" alt="@($"Photo of {park.Name}")" />
+                        }
+                        else
+                        {
+                            <div style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;" role="img" aria-label="@($"Placeholder image for {park.Name}")">
+                                <MudIcon Icon="@Icons.Material.Filled.Park" Size="Size.Large" Color="Color.Surface" />
+                            </div>
+                        }
+                        <MudCardContent>
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <MudText Typo="Typo.h6">@park.Name</MudText>
+                                @if (park.IsFeatured)
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Warning">Featured</MudChip>
+                                }
+                            </div>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@park.Region</MudText>
+                            @if (park.ActivityNames.Any())
+                            {
+                                <MudChipSet T="string" Class="mt-2">
+                                    @foreach (var activity in park.ActivityNames.Take(3))
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Text">@activity</MudChip>
+                                    }
+                                    @if (park.ActivityNames.Count > 3)
+                                    {
+                                        <MudChip T="string" Size="Size.Small" Color="Color.Default" Variant="Variant.Text">+@(park.ActivityNames.Count - 3) more</MudChip>
+                                    }
+                                </MudChipSet>
+                            }
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudIconButton Icon="@(favoriteIds.Contains(park.Id) ? Icons.Material.Filled.Favorite : Icons.Material.Outlined.FavoriteBorder)"
+                                          Color="@(favoriteIds.Contains(park.Id) ? Color.Error : Color.Default)"
+                                          OnClick="@((MouseEventArgs e) => ToggleFavorite(park.Id))"
+                                          aria-label="@(favoriteIds.Contains(park.Id) ? $"Remove {park.Name} from favorites" : $"Add {park.Name} to favorites")" />
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+
+        @if (totalPages > 1)
+        {
+            <MudPagination Class="mt-4" Count="totalPages" Selected="currentPage" SelectedChanged="OnPageChanged" aria-label="Park list pagination" />
+        }
+    }
+    else
+    {
+        <MudAlert Severity="Severity.Info">No parks found. Try adjusting your search or filters.</MudAlert>
+    }
+</MudContainer>
+
+@code {
+    private List<ParkListDto> parks = new();
+    private List<ActivityDto> allActivities = new();
+    private HashSet<string> _selectedActivitiesSet = new();
+    private IReadOnlyCollection<string> selectedActivities 
+    { 
+        get => _selectedActivitiesSet;
+        set 
+        { 
+            _selectedActivitiesSet = value?.ToHashSet() ?? new HashSet<string>();
+            _ = OnFilterChanged();
+        }
+    }
+    private HashSet<int> favoriteIds = new();
+    private string searchQuery = "";
+    private bool isLoading = true;
+    private int currentPage = 1;
+    private int totalPages = 1;
+    private System.Threading.Timer? searchDebounceTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allActivities = await ApiClient.GetActivitiesAsync();
+        favoriteIds = (await FavoritesService.GetFavoritesAsync()).ToHashSet();
+        await LoadParks();
+    }
+
+    private async Task LoadParks()
+    {
+        isLoading = true;
+        PagedResultDto<ParkListDto> result;
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            result = await ApiClient.SearchParksAsync(searchQuery, currentPage, 12);
+        }
+        else if (_selectedActivitiesSet.Any())
+        {
+            result = await ApiClient.FilterParksAsync(_selectedActivitiesSet.ToList(), "any", currentPage, 12);
+        }
+        else
+        {
+            result = await ApiClient.GetParksAsync(currentPage, 12);
+        }
+
+        parks = result.Items;
+        totalPages = result.TotalPages;
+        isLoading = false;
+        StateHasChanged();
+    }
+
+    private void OnSearchKeyUp(KeyboardEventArgs e)
+    {
+        searchDebounceTimer?.Dispose();
+        searchDebounceTimer = new System.Threading.Timer(async _ =>
+        {
+            await InvokeAsync(async () =>
+            {
+                currentPage = 1;
+                await LoadParks();
+            });
+        }, null, 300, Timeout.Infinite);
+    }
+
+    private async Task ClearSearch()
+    {
+        searchQuery = "";
+        currentPage = 1;
+        await LoadParks();
+    }
+
+    private async Task OnFilterChanged()
+    {
+        currentPage = 1;
+        await LoadParks();
+    }
+
+    private async Task RemoveFilter(string activity)
+    {
+        _selectedActivitiesSet.Remove(activity);
+        await OnFilterChanged();
+    }
+
+    private async Task OnPageChanged(int page)
+    {
+        currentPage = page;
+        await LoadParks();
+    }
+
+    private void NavigateToPark(int parkId)
+    {
+        Navigation.NavigateTo($"/parks/{parkId}");
+    }
+
+    private async Task ToggleFavorite(int parkId)
+    {
+        if (favoriteIds.Contains(parkId))
+        {
+            await FavoritesService.RemoveFavoriteAsync(parkId);
+            favoriteIds.Remove(parkId);
+        }
+        else
+        {
+            await FavoritesService.AddFavoriteAsync(parkId);
+            favoriteIds.Add(parkId);
+        }
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        searchDebounceTimer?.Dispose();
+    }
+}
+

@@ -1,0 +1,209 @@
+@page "/parks/{id:int}"
+@using OntarioParksExplorer.Blazor.Models
+@using OntarioParksExplorer.Blazor.Services
+@inject ParksApiClient ApiClient
+@inject NavigationManager Navigation
+@inject FavoritesService FavoritesService
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+<PageTitle>@(park?.Name ?? "Park Details") - Ontario Parks Explorer</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    @if (isLoading)
+    {
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="400px" Class="mb-4" />
+        <MudSkeleton Width="60%" Height="40px" Class="mb-2" />
+        <MudSkeleton Width="100%" Height="100px" />
+    }
+    else if (park == null)
+    {
+        <MudAlert Severity="Severity.Error">Park not found.</MudAlert>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/parks" Class="mt-4">
+            Back to Parks
+        </MudButton>
+    }
+    else
+    {
+        <MudBreadcrumbs Items="breadcrumbs" Class="mb-4"></MudBreadcrumbs>
+
+        @if (park.Images.Any())
+        {
+            <MudCarousel TData="object" Class="mb-4" Style="height: 400px;" ShowArrows="true" ShowBullets="true" AutoCycle="false">
+                @foreach (var image in park.Images)
+                {
+                    <MudCarouselItem>
+                        <div style="height: 400px; background-image: url('@image.Url'); background-size: cover; background-position: center;">
+                        </div>
+                    </MudCarouselItem>
+                }
+            </MudCarousel>
+        }
+        else
+        {
+            <div style="height: 400px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;" class="mb-4">
+                <MudIcon Icon="@Icons.Material.Filled.Park" Size="Size.Large" Style="font-size: 120px;" Color="Color.Surface" />
+            </div>
+        }
+
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+            <div>
+                <MudText Typo="Typo.h3">@park.Name</MudText>
+                <MudText Typo="Typo.h6" Color="Color.Secondary">@park.Region</MudText>
+            </div>
+            <div>
+                @if (park.IsFeatured)
+                {
+                    <MudChip T="string" Color="Color.Warning" Size="Size.Large">Featured Park</MudChip>
+                }
+                <MudIconButton Icon="@(isFavorite ? Icons.Material.Filled.Favorite : Icons.Material.Outlined.FavoriteBorder)"
+                              Color="@(isFavorite ? Color.Error : Color.Default)"
+                              Size="Size.Large"
+                              OnClick="ToggleFavorite" />
+            </div>
+        </div>
+
+        <MudGrid>
+            <MudItem xs="12" md="8">
+                <MudPaper Class="pa-4 mb-4">
+                    <MudText Typo="Typo.h5" Class="mb-2">About</MudText>
+                    <MudText Typo="Typo.body1">@park.Description</MudText>
+                    
+                    @if (string.IsNullOrEmpty(aiSummary))
+                    {
+                        <MudButton Variant="Variant.Text" 
+                                  Color="Color.Secondary" 
+                                  StartIcon="@Icons.Material.Filled.AutoAwesome"
+                                  OnClick="GenerateAiSummary"
+                                  Disabled="@isGeneratingSummary"
+                                  Class="mt-3">
+                            @(isGeneratingSummary ? "Generating..." : "✨ Generate AI Summary")
+                        </MudButton>
+                    }
+                    else
+                    {
+                        <MudAlert Severity="Severity.Info" Class="mt-3" Icon="@Icons.Material.Filled.AutoAwesome">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1"><strong>AI Summary</strong></MudText>
+                            <MudText Typo="Typo.body2">@aiSummary</MudText>
+                        </MudAlert>
+                    }
+                </MudPaper>
+
+                <MudPaper Class="pa-4 mb-4">
+                    <MudText Typo="Typo.h5" Class="mb-2">Activities</MudText>
+                    @if (park.Activities.Any())
+                    {
+                        <MudChipSet T="string">
+                            @foreach (var activity in park.Activities)
+                            {
+                                <MudChip T="string" Color="Color.Primary">@activity.Name</MudChip>
+                            }
+                        </MudChipSet>
+                    }
+                    else
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">No activities listed</MudText>
+                    }
+                </MudPaper>
+
+                <MudPaper Class="pa-4">
+                    <MudText Typo="Typo.h5" Class="mb-2">Location</MudText>
+                    <div id="parkDetailMap" style="height: 300px; width: 100%;"></div>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4 mb-4">
+                    <MudText Typo="Typo.h6" Class="mb-2">Details</MudText>
+                    <MudList T="string" Dense="true">
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.LocationOn">
+                            <MudText Typo="Typo.body2">@park.Location</MudText>
+                        </MudListItem>
+                        <MudListItem T="string" Icon="@Icons.Material.Filled.Public">
+                            <MudText Typo="Typo.body2">@park.Latitude.ToString("F4"), @park.Longitude.ToString("F4")</MudText>
+                        </MudListItem>
+                        @if (!string.IsNullOrEmpty(park.Website))
+                        {
+                            <MudListItem T="string" Icon="@Icons.Material.Filled.Link">
+                                <MudLink Href="@park.Website" Target="_blank" Typo="Typo.body2">Visit Website</MudLink>
+                            </MudListItem>
+                        }
+                    </MudList>
+                </MudPaper>
+
+                <VisitPlanner ParkId="@Id" />
+
+                <MudButton Variant="Variant.Outlined" 
+                          Color="Color.Primary" 
+                          FullWidth="true"
+                          Href="/parks">
+                    Back to All Parks
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    }
+</MudContainer>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private ParkDetailDto? park;
+    private bool isLoading = true;
+    private bool isFavorite = false;
+    private List<BreadcrumbItem> breadcrumbs = new();
+    private string? aiSummary;
+    private bool isGeneratingSummary = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        park = await ApiClient.GetParkByIdAsync(Id);
+        isFavorite = await FavoritesService.IsFavoriteAsync(Id);
+        isLoading = false;
+
+        if (park != null)
+        {
+            breadcrumbs = new List<BreadcrumbItem>
+            {
+                new BreadcrumbItem("Home", href: "/"),
+                new BreadcrumbItem("Parks", href: "/parks"),
+                new BreadcrumbItem(park.Name, href: null, disabled: true)
+            };
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && park != null)
+        {
+            await JS.InvokeVoidAsync("mapInterop.initMap", "parkDetailMap", park.Latitude, park.Longitude, 10);
+            await JS.InvokeVoidAsync("mapInterop.addMarker", park.Latitude, park.Longitude, park.Name, $"<strong>{park.Name}</strong><br/>{park.Location}");
+        }
+    }
+
+    private async Task ToggleFavorite()
+    {
+        if (isFavorite)
+        {
+            await FavoritesService.RemoveFavoriteAsync(Id);
+            isFavorite = false;
+        }
+        else
+        {
+            await FavoritesService.AddFavoriteAsync(Id);
+            isFavorite = true;
+        }
+        StateHasChanged();
+    }
+
+    private async Task GenerateAiSummary()
+    {
+        isGeneratingSummary = true;
+        StateHasChanged();
+        
+        aiSummary = await ApiClient.GenerateSummaryAsync(Id);
+        
+        isGeneratingSummary = false;
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" aria-label="Toggle navigation menu" />
+        <MudText Typo="Typo.h5" Class="ml-3">🌲 Ontario Parks Explorer</MudText>
+        <MudSpacer />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <MudNavMenu role="navigation" aria-label="Main navigation">
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+            <MudNavLink Href="/parks" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Park">Browse Parks</MudNavLink>
+            <MudNavLink Href="/favorites" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Favorite">My Favorites</MudNavLink>
+            <MudNavLink Href="/map" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Map">Map View</MudNavLink>
+            <MudDivider Class="my-2" />
+            <MudNavLink Href="/chat" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Chat">AI Chat</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent role="main">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private bool _drawerOpen = true;
+
+    private void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
