@@ -12,7 +12,7 @@ How to decide who handles what.
 | Copilot SDK, AI features, prompts | Grant | AI endpoints, prompt templates, park summaries, recommendations, Q&A |
 | Aspire, orchestration, service discovery, health checks, dashboard | Hammond | AppHost config, integrations, CLI workflows, deployment model |
 | Code review | Malcolm | Review PRs, check quality, architectural alignment |
-| Testing | Muldoon | Write tests, find edge cases, verify fixes, quality gates |
+| Testing, Playwright E2E | Muldoon | Write tests, find edge cases, verify fixes, quality gates, E2E browser tests |
 | Scope & priorities | Malcolm | What to build next, trade-offs, decisions |
 | Async issue work (bugs, tests, small features) | @copilot 🤖 | Well-defined tasks matching capability profile |
 | Session logging | Scribe | Automatic — never needs routing |
