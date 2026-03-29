@@ -254,6 +254,7 @@ dotnet test --verbosity detailed
 | Document | Description |
 |----------|-------------|
 | [📖 User Manual](docs/USERMANUAL.md) | Comprehensive guide with screenshots for all features |
+| [🚀 Journey](docs/JOURNEY.md) | From Prompt to Production — how the AI team built this app |
 | [🎬 Demo Script](docs/DEMO.md) | Guided walkthrough for live demos (10-15 minutes) |
 
 ---

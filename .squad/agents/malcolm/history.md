@@ -37,6 +37,24 @@ Malcolm led the foundational architecture decisions for OntarioParksExplorer. Es
 
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
 
+### JOURNEY.md: From Prompt to Production Narrative (2026-04-11)
+
+**Deliverable:** `docs/JOURNEY.md` — narrative document telling the story of how the Squad team built OntarioParksExplorer from natural language prompts.
+
+**Structure:** 7 chapters covering the original prompt, team assembly, first build, the OpenAI→Copilot SDK pivot, polish & documentation, architectural decisions trail, and final inventory. Approximately 300 lines, 4 screenshots embedded, callout boxes for key insights.
+
+**Key Narrative Points:**
+- The second prompt (scope change) is more compelling than the first (greenfield build) — it proves AI teams can adapt
+- Abstraction layers (IAiService, Microsoft.Extensions.AI) enabled the mid-project pivot
+- Decision documentation is the strongest evidence of AI reasoning beyond autocomplete
+- Honest about limitations: screenshot timing issues, CORS dev-only config, AddViteApp workaround
+
+**Sources:** Git commit history (9 commits), decisions.md (13 active decisions), agent history files, README.md architecture diagram, 12 screenshots (4 used).
+
+**Audience:** Developers evaluating AI-assisted development, conference talks, blog posts.
+
+---
+
 ### WI-Coordinator: README Rewrite & Team Showcase (2026-03-29)
 
 **Deliverables:**
