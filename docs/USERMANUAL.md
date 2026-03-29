@@ -12,7 +12,8 @@
 8. [Favorites](#favorites)
 9. [Settings](#settings)
 10. [AI Features](#ai-features)
-11. [Troubleshooting](#troubleshooting)
+11. [API Documentation](#api-documentation)
+12. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -28,6 +29,8 @@ Ontario Parks Explorer is a full-stack web application for discovering, explorin
 - **Favorites** — Save parks you love for quick access
 
 The application is built with **.NET Aspire**, providing a **Blazor Server** frontend, **React** frontend, and **ASP.NET Core API** backend, all orchestrated together.
+
+![Home Page](../screenshots/01-home.png)
 
 ---
 
@@ -55,6 +58,8 @@ This starts all services:
 
 Open the Aspire Dashboard URL shown in the terminal to access all service endpoints.
 
+![Aspire Dashboard](../screenshots/08-aspire-dashboard.png)
+
 ---
 
 ## Home Page
@@ -68,11 +73,15 @@ The Home page (`/`) is the entry point for the application. It provides:
   - **AI Chat** — Conversational AI assistant
 - **Recommendations widget** — AI-suggested parks based on popular activities
 
+![Home Page](../screenshots/01-home.png)
+
 ---
 
 ## Browse Parks
 
 Navigate to **Parks** (`/parks`) to browse the complete list of Ontario Provincial Parks.
+
+![Parks Listing](../screenshots/02-parks.png)
 
 ### Features
 
@@ -123,10 +132,12 @@ Click on any park to view its detail page (`/parks/{id}`).
 
 Navigate to **Map** (`/map`) to see all parks plotted on an interactive map.
 
+![Interactive Map](../screenshots/04-map.png)
+
 ### Features
 
 - **OpenStreetMap tiles** — Free, high-quality map tiles (no API key required)
-- **Park markers** — Each park is shown as a marker at its GPS location
+- **Park markers** — Each park is shown as a marker at its GPS location (31 parks total)
 - **Popups** — Click a marker to see:
   - Park name
   - Region
@@ -143,6 +154,8 @@ The map is centered on Ontario at coordinates (50.0°N, 85.0°W) with zoom level
 ## AI Chat Assistant
 
 Navigate to **AI Chat** (`/chat`) to interact with the AI parks assistant.
+
+![AI Chat Assistant](../screenshots/05-chat.png)
 
 ### How to Use
 
@@ -176,6 +189,8 @@ The chat is powered by the **GitHub Copilot SDK** through the **Microsoft Agent 
 
 Navigate to **Favorites** (`/favorites`) to view your saved parks.
 
+![Favorites Page](../screenshots/06-favorites.png)
+
 ### How It Works
 
 - Click the heart/star icon on any park card or detail page to add it to favorites
@@ -188,6 +203,8 @@ Navigate to **Favorites** (`/favorites`) to view your saved parks.
 ## Settings
 
 Navigate to **Settings** (`/settings`) to view application configuration and status.
+
+![Settings Page](../screenshots/07-settings.png)
 
 ### Configuration Sections
 
@@ -242,6 +259,29 @@ The application uses the **Microsoft Agent Framework** with the **GitHub Copilot
 
 ---
 
+## API Documentation
+
+The backend API provides comprehensive REST endpoints for all park data and AI features. The API is documented with Swagger/OpenAPI and can be explored interactively.
+
+![Swagger API Documentation](../screenshots/09-api-swagger.png)
+
+### Accessing the API Documentation
+
+When running the application with `aspire run`, the Swagger UI is available at the API endpoint shown in the Aspire Dashboard (typically `http://localhost:7002/swagger`).
+
+### Key Endpoints
+
+- **GET /api/parks** — List all parks with optional filtering
+- **GET /api/parks/{id}** — Get detailed park information
+- **POST /api/ai/chat** — Send messages to the AI assistant
+- **POST /api/ai/parks/{id}/summary** — Generate AI park summary
+- **POST /api/ai/recommendations** — Get personalized park recommendations
+- **POST /api/ai/plan-visit** — Generate visit itineraries
+
+All AI endpoints use the **GitHub Copilot SDK** backend for intelligent responses.
+
+---
+
 ## Troubleshooting
 
 ### AI Features Not Working
@@ -252,7 +292,7 @@ The application uses the **Microsoft Agent Framework** with the **GitHub Copilot
 1. Install GitHub Copilot CLI: `gh extension install github/gh-copilot`
 2. Authenticate: `copilot auth login`
 3. Check Settings page for AI status
-4. Restart the application after authentication
+4. Restart the application with `aspire run` after authentication
 
 ### Map Not Loading
 

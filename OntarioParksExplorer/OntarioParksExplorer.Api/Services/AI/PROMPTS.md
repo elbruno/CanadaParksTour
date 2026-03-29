@@ -151,14 +151,13 @@ AI service requires configuration in `appsettings.json`:
 ```json
 {
   "AI": {
-    "ApiKey": "your-api-key-here",
-    "Model": "gpt-4o-mini",
-    "Provider": "OpenAI"
+    "Provider": "GitHubCopilot",
+    "Model": ""
   }
 }
 ```
 
-When `ApiKey` is not set, all methods return graceful fallback messages.
+When the Copilot CLI is not available, all methods return graceful fallback messages.
 
 ## Performance Optimizations
 

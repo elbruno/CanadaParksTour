@@ -37,7 +37,7 @@ Most tests are currently skipped because they require running applications. To r
 1. Start the application host:
    ```bash
    cd ..
-   dotnet run --project OntarioParksExplorer.AppHost
+   aspire run
    ```
 
 2. Uncomment the `test.skip` lines in the test files to enable tests

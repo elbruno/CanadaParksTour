@@ -3,7 +3,7 @@
 A guided walkthrough of the Ontario Parks Explorer application, showcasing all features and capabilities.
 
 **Estimated Duration:** 10-15 minutes  
-**Prerequisites:** Application running with `aspire run` or `dotnet run --project OntarioParksExplorer.AppHost`
+**Prerequisites:** Application running with `aspire run` or `aspire start`
 
 ---
 
@@ -24,8 +24,7 @@ A guided walkthrough of the Ontario Parks Explorer application, showcasing all f
 
 ```bash
 cd C:\src\CanadaParksTour\OntarioParksExplorer
-dotnet run --project OntarioParksExplorer.AppHost
-# OR: aspire run
+aspire run
 ```
 
 **Expected Output:**
@@ -226,8 +225,8 @@ Starting React service...
 ### IMPORTANT: AI Requirements
 
 **Before showing AI features:**
-- Verify `AI:ApiKey` is set in `OntarioParksExplorer.Api/appsettings.json`
-- If not set, AI endpoints will return **503 Service Unavailable**
+- Verify the **Copilot CLI** is installed and authenticated (`copilot auth login`)
+- If the Copilot CLI is not available, AI endpoints will return graceful fallback messages
 
 ### Feature 1: Park Summary Generation
 
@@ -434,10 +433,10 @@ curl https://localhost:7002/health
 **A:** Both are fully functional. Choose Blazor for server-rendered interactivity with .NET, or React for modern SPA experience. API is the same.
 
 ### Q: "How does AI work?"
-**A:** Uses OpenAI's GPT-4o-mini model via Microsoft.Extensions.AI abstraction. Provides context about parks + user input → intelligent responses.
+**A:** Uses the **GitHub Copilot SDK** with Microsoft Agent Framework. The Copilot CLI communicates with GitHub Copilot to provide intelligent, context-aware responses about parks. No separate API keys needed.
 
 ### Q: "What happens if AI is disabled?"
-**A:** Endpoints return 503 Service Unavailable with clear error messages.
+**A:** Endpoints return graceful fallback messages with informational text.
 
 ### Q: "How many parks are in the database?"
 **A:** Currently seeded with ~67 Ontario Provincial Parks. Easily expandable by updating seed-data/parks.json.
@@ -452,14 +451,14 @@ curl https://localhost:7002/health
 
 ## Demo Troubleshooting
 
-### Issue: "AI features not working (503 error)"
-**Solution:** Check `appsettings.json` has valid OpenAI API key:
-```json
-{
-  "AI": {
-    "ApiKey": "sk-your-actual-key-here"
-  }
-}
+### Issue: "AI features not working"
+**Solution:** Ensure the Copilot CLI is installed and authenticated:
+```bash
+# Install Copilot CLI
+gh extension install github/gh-copilot
+
+# Authenticate
+copilot auth login
 ```
 
 ### Issue: "React not loading (port 5173 error)"
@@ -522,7 +521,7 @@ curl https://localhost:7002/health
 
 3. **Show Service Architecture**
    - IParksService interface and implementation
-   - IAiService and OpenAI integration
+   - IAiService and GitHub Copilot SDK integration
    - Dependency injection in Program.cs
 
 4. **Show React Component Structure**

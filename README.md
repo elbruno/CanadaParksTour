@@ -462,6 +462,17 @@ curl -sSL https://aspire.dev/install.sh | bash
 
 ---
 
+## Documentation
+
+Additional documentation is available in the [`docs/`](docs/) folder:
+
+| Document | Description |
+|----------|-------------|
+| [User Manual](docs/USERMANUAL.md) | Comprehensive guide with screenshots for all features |
+| [Demo Script](docs/DEMO.md) | Guided walkthrough for live demos (10-15 minutes) |
+
+---
+
 ## License
 
 MIT License — See LICENSE file for details.
