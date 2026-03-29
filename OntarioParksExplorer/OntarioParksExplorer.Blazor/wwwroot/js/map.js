@@ -11,6 +11,11 @@ window.mapInterop = {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
         markers = [];
+        
+        // Force Leaflet to recalculate container size after initialization
+        setTimeout(function () {
+            map.invalidateSize();
+        }, 100);
     },
 
     addMarker: function (lat, lon, title, popupContent) {

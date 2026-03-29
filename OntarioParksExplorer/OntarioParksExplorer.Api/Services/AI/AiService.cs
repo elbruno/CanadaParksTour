@@ -1,27 +1,25 @@
 using System.Text.Json;
+using Microsoft.Agents.AI;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Caching.Memory;
 using OntarioParksExplorer.Api.Data;
 using OntarioParksExplorer.Api.Data.Entities;
 using OntarioParksExplorer.Api.Models.DTOs.AI;
 using OntarioParksExplorer.Api.Services.AI.Prompts;
-using AIChatMessage = Microsoft.Extensions.AI.ChatMessage;
-using DTOChatMessage = OntarioParksExplorer.Api.Models.DTOs.AI.ChatMessage;
 
 namespace OntarioParksExplorer.Api.Services.AI;
 
 /// <summary>
 /// AI service providing park summaries, recommendations, chat, and visit planning.
+/// Uses Microsoft Agent Framework with GitHub Copilot SDK as the AI backend.
 /// Implements caching and optimized context injection for token efficiency.
 /// </summary>
 public class AiService : IAiService
 {
-    private readonly IChatClient? _chatClient;
+    private readonly ICopilotAgentProvider _agentProvider;
     private readonly ParksDbContext _context;
     private readonly IMemoryCache _cache;
     private readonly ILogger<AiService> _logger;
-    private readonly bool _isConfigured;
     
     private static readonly TimeSpan DefaultCacheDuration = TimeSpan.FromHours(24);
     private static readonly TimeSpan AiTimeout = TimeSpan.FromSeconds(30);
@@ -31,16 +29,15 @@ public class AiService : IAiService
     };
 
     public AiService(
-        IChatClient? chatClient, 
+        ICopilotAgentProvider agentProvider, 
         ParksDbContext context, 
         IMemoryCache cache,
         ILogger<AiService> logger)
     {
-        _chatClient = chatClient;
+        _agentProvider = agentProvider;
         _context = context;
         _cache = cache;
         _logger = logger;
-        _isConfigured = _chatClient != null;
     }
 
     /// <summary>
@@ -48,9 +45,10 @@ public class AiService : IAiService
     /// </summary>
     public async Task<string> GenerateParkSummaryAsync(Park park)
     {
-        if (!_isConfigured)
+        var agent = await _agentProvider.GetAgentAsync();
+        if (agent == null)
         {
-            return "AI features are not configured. Set the AI:ApiKey in appsettings.json to enable AI-powered summaries.";
+            return "AI features are not configured. Ensure GitHub Copilot CLI is installed and authenticated to enable AI-powered summaries.";
         }
 
         var cacheKey = $"park-summary-{park.Id}";
@@ -72,15 +70,10 @@ public class AiService : IAiService
 
             var prompt = PromptTemplates.ParkSummary(park.Name, park.Description, activities);
 
-            var messages = new List<AIChatMessage>
-            {
-                new AIChatMessage(ChatRole.User, prompt)
-            };
-
             using var cts = new CancellationTokenSource(AiTimeout);
-            var response = await _chatClient!.GetResponseAsync(messages, cancellationToken: cts.Token);
+            var response = await agent.RunAsync(prompt).WaitAsync(cts.Token);
 
-            var summary = response.Text ?? "Unable to generate summary at this time.";
+            var summary = response?.ToString() ?? "Unable to generate summary at this time.";
             
             _cache.Set(cacheKey, summary, DefaultCacheDuration);
             _logger.LogInformation("Generated and cached summary for park {ParkId}", park.Id);
@@ -104,7 +97,8 @@ public class AiService : IAiService
     /// </summary>
     public async Task<List<ParkRecommendation>> GetRecommendationsAsync(RecommendationRequest request)
     {
-        if (!_isConfigured)
+        var agent = await _agentProvider.GetAgentAsync();
+        if (agent == null)
         {
             return new List<ParkRecommendation>
             {
@@ -112,7 +106,7 @@ public class AiService : IAiService
                 {
                     ParkId = 0,
                     ParkName = "AI Not Configured",
-                    Reason = "AI features are not configured. Set the AI:ApiKey in appsettings.json to enable recommendations.",
+                    Reason = "AI features are not configured. Ensure GitHub Copilot CLI is installed and authenticated to enable recommendations.",
                     MatchScore = 0.0
                 }
             };
@@ -122,18 +116,14 @@ public class AiService : IAiService
         {
             var prompt = PromptTemplates.Recommendations(request.Activities, request.Region, request.PreferenceText);
 
-            var messages = new List<AIChatMessage>
-            {
-                new AIChatMessage(ChatRole.User, prompt)
-            };
-
             using var cts = new CancellationTokenSource(AiTimeout);
-            var response = await _chatClient!.GetResponseAsync(messages, new ChatOptions
-            {
-                ResponseFormat = ChatResponseFormat.Json
-            }, cts.Token);
+            var response = await agent.RunAsync(prompt).WaitAsync(cts.Token);
 
-            var jsonResponse = response.Text ?? "{}";
+            var jsonResponse = response?.ToString() ?? "{}";
+            
+            // Extract JSON from response (agent may include extra text around JSON)
+            jsonResponse = ExtractJson(jsonResponse);
+            
             var result = JsonSerializer.Deserialize<RecommendationResponse>(jsonResponse, JsonOptions);
 
             if (result?.Recommendations == null || !result.Recommendations.Any())
@@ -185,41 +175,42 @@ public class AiService : IAiService
 
     /// <summary>
     /// Handles chat interactions about Ontario parks with context-aware responses.
-    /// Only loads minimal, relevant park data to optimize token usage.
+    /// Embeds conversation history in the prompt for stateless multi-turn support.
     /// </summary>
     public async Task<string> ChatAsync(ChatRequest request)
     {
-        if (!_isConfigured)
+        var agent = await _agentProvider.GetAgentAsync();
+        if (agent == null)
         {
-            return "AI features are not configured. Set the AI:ApiKey in appsettings.json to enable the chat feature.";
+            return "AI features are not configured. Ensure GitHub Copilot CLI is installed and authenticated to enable the chat feature.";
         }
 
         try
         {
             var parkContext = await BuildMinimalParkContextAsync(request.Message);
 
-            var messages = new List<AIChatMessage>();
+            var promptParts = new List<string>();
 
+            // Embed conversation history in the prompt
             if (request.ConversationHistory != null && request.ConversationHistory.Any())
             {
+                promptParts.Add("Previous conversation:");
                 foreach (var msg in request.ConversationHistory.TakeLast(10))
                 {
-                    messages.Add(new AIChatMessage(
-                        msg.Role == "user" ? ChatRole.User : ChatRole.Assistant,
-                        msg.Content
-                    ));
+                    var role = msg.Role == "user" ? "User" : "Assistant";
+                    promptParts.Add($"{role}: {msg.Content}");
                 }
+                promptParts.Add("");
             }
 
-            messages.Add(new AIChatMessage(
-                ChatRole.User,
-                PromptTemplates.Chat(request.Message, parkContext)
-            ));
+            promptParts.Add(PromptTemplates.Chat(request.Message, parkContext));
+
+            var fullPrompt = string.Join("\n", promptParts);
 
             using var cts = new CancellationTokenSource(AiTimeout);
-            var response = await _chatClient!.GetResponseAsync(messages, cancellationToken: cts.Token);
+            var response = await agent.RunAsync(fullPrompt).WaitAsync(cts.Token);
 
-            return response.Text ?? "I'm unable to provide an answer at this time.";
+            return response?.ToString() ?? "I'm unable to provide an answer at this time.";
         }
         catch (OperationCanceledException)
         {
@@ -294,7 +285,8 @@ public class AiService : IAiService
             throw new ArgumentException($"Park with ID {request.ParkId} not found");
         }
 
-        if (!_isConfigured)
+        var agent = await _agentProvider.GetAgentAsync();
+        if (agent == null)
         {
             return new VisitPlan
             {
@@ -303,7 +295,7 @@ public class AiService : IAiService
                 Days = new List<VisitDay>(),
                 Tips = new List<string>
                 {
-                    "AI features are not configured. Set the AI:ApiKey in appsettings.json to enable visit planning."
+                    "AI features are not configured. Ensure GitHub Copilot CLI is installed and authenticated to enable visit planning."
                 }
             };
         }
@@ -320,18 +312,14 @@ public class AiService : IAiService
                 request.Season
             );
 
-            var messages = new List<AIChatMessage>
-            {
-                new AIChatMessage(ChatRole.User, prompt)
-            };
-
             using var cts = new CancellationTokenSource(AiTimeout);
-            var response = await _chatClient!.GetResponseAsync(messages, new ChatOptions
-            {
-                ResponseFormat = ChatResponseFormat.Json
-            }, cts.Token);
+            var response = await agent.RunAsync(prompt).WaitAsync(cts.Token);
 
-            var jsonResponse = response.Text ?? "{}";
+            var jsonResponse = response?.ToString() ?? "{}";
+            
+            // Extract JSON from response (agent may include extra text around JSON)
+            jsonResponse = ExtractJson(jsonResponse);
+            
             var result = JsonSerializer.Deserialize<VisitPlanResponse>(jsonResponse, JsonOptions);
 
             if (result?.Days == null || !result.Days.Any())
@@ -378,6 +366,63 @@ public class AiService : IAiService
                 $"Check {park.Name}'s official website for the latest information."
             }
         };
+    }
+
+    /// <summary>
+    /// Extracts JSON from a response that may contain surrounding text.
+    /// The Copilot agent may wrap JSON in markdown code blocks or add explanatory text.
+    /// </summary>
+    private static string ExtractJson(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return "{}";
+
+        // Try to extract from markdown code block
+        var jsonBlockStart = text.IndexOf("```json", StringComparison.OrdinalIgnoreCase);
+        if (jsonBlockStart >= 0)
+        {
+            var contentStart = text.IndexOf('\n', jsonBlockStart) + 1;
+            var blockEnd = text.IndexOf("```", contentStart, StringComparison.Ordinal);
+            if (blockEnd > contentStart)
+            {
+                return text[contentStart..blockEnd].Trim();
+            }
+        }
+
+        // Try to extract from generic code block
+        var codeBlockStart = text.IndexOf("```", StringComparison.Ordinal);
+        if (codeBlockStart >= 0)
+        {
+            var contentStart = text.IndexOf('\n', codeBlockStart) + 1;
+            var blockEnd = text.IndexOf("```", contentStart, StringComparison.Ordinal);
+            if (blockEnd > contentStart)
+            {
+                return text[contentStart..blockEnd].Trim();
+            }
+        }
+
+        // Try to find raw JSON object or array
+        var firstBrace = text.IndexOf('{');
+        var firstBracket = text.IndexOf('[');
+        
+        if (firstBrace >= 0)
+        {
+            var lastBrace = text.LastIndexOf('}');
+            if (lastBrace > firstBrace)
+            {
+                return text[firstBrace..(lastBrace + 1)];
+            }
+        }
+
+        if (firstBracket >= 0)
+        {
+            var lastBracket = text.LastIndexOf(']');
+            if (lastBracket > firstBracket)
+            {
+                return text[firstBracket..(lastBracket + 1)];
+            }
+        }
+
+        return text.Trim();
     }
 
     private class RecommendationResponse

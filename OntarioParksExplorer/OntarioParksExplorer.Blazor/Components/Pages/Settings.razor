@@ -1,0 +1,166 @@
+@page "/settings"
+@using OntarioParksExplorer.Blazor.Models
+@using OntarioParksExplorer.Blazor.Services
+@inject ParksApiClient ApiClient
+@rendermode InteractiveServer
+
+<PageTitle>Settings - Ontario Parks Explorer</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+    <MudText Typo="Typo.h3" Class="mb-4">
+        <MudIcon Icon="@Icons.Material.Filled.Settings" Class="mr-2" /> Settings
+    </MudText>
+
+    @if (isLoading)
+    {
+        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mb-4" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="200px" Class="mb-4" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="200px" />
+    }
+    else
+    {
+        <MudGrid>
+            <!-- AI Configuration -->
+            <MudItem xs="12">
+                <MudCard Class="mb-4">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h5">
+                                <MudIcon Icon="@Icons.Material.Filled.SmartToy" Class="mr-2" />
+                                AI Configuration
+                            </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudSimpleTable Dense="true" Hover="true" Bordered="true">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Provider</strong></td>
+                                    <td>@(settings?.AiProvider ?? "Unknown")</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Model</strong></td>
+                                    <td>@(settings?.AiModel ?? "Default")</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status</strong></td>
+                                    <td>
+                                        @if (settings?.AiConfigured == true)
+                                        {
+                                            <MudChip T="string" Color="Color.Success" Size="Size.Small">Connected</MudChip>
+                                        }
+                                        else
+                                        {
+                                            <MudChip T="string" Color="Color.Warning" Size="Size.Small">Not Connected</MudChip>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>API Key Required</strong></td>
+                                    <td>
+                                        <MudChip T="string" Color="Color.Info" Size="Size.Small">No — Uses Copilot CLI</MudChip>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+
+                        @if (settings?.AiConfigured != true)
+                        {
+                            <MudAlert Severity="Severity.Info" Class="mt-3">
+                                AI features require GitHub Copilot CLI to be installed and authenticated.
+                                Run <code>copilot auth login</code> in your terminal to authenticate.
+                            </MudAlert>
+                        }
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- Map Configuration -->
+            <MudItem xs="12">
+                <MudCard Class="mb-4">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h5">
+                                <MudIcon Icon="@Icons.Material.Filled.Map" Class="mr-2" />
+                                Map Configuration
+                            </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudSimpleTable Dense="true" Hover="true" Bordered="true">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Tile Provider</strong></td>
+                                    <td>@(settings?.MapProvider ?? "OpenStreetMap")</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>API Key Required</strong></td>
+                                    <td>
+                                        <MudChip T="string" Color="Color.Success" Size="Size.Small">No — Free & Open Source</MudChip>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status</strong></td>
+                                    <td>
+                                        <MudChip T="string" Color="Color.Success" Size="Size.Small">Active</MudChip>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+
+            <!-- Application Info -->
+            <MudItem xs="12">
+                <MudCard Class="mb-4">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h5">
+                                <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-2" />
+                                Application Info
+                            </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudSimpleTable Dense="true" Hover="true" Bordered="true">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Application</strong></td>
+                                    <td>Ontario Parks Explorer</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Version</strong></td>
+                                    <td>@(settings?.AppVersion ?? "1.0.0")</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Framework</strong></td>
+                                    <td>.NET 10 with .NET Aspire</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>AI Backend</strong></td>
+                                    <td>Microsoft Agent Framework + GitHub Copilot SDK</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Frontend</strong></td>
+                                    <td>Blazor Server + React (dual frontend)</td>
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    }
+</MudContainer>
+
+@code {
+    private AppSettingsDto? settings;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        settings = await ApiClient.GetSettingsAsync();
+        isLoading = false;
+    }
+}

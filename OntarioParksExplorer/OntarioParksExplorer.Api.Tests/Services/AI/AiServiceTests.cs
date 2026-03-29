@@ -14,6 +14,7 @@ public class AiServiceTests : IDisposable
     private readonly ParksDbContext _context;
     private readonly Mock<ILogger<AiService>> _mockLogger;
     private readonly IMemoryCache _cache;
+    private readonly Mock<ICopilotAgentProvider> _mockAgentProvider;
 
     public AiServiceTests()
     {
@@ -24,6 +25,12 @@ public class AiServiceTests : IDisposable
         _context = new ParksDbContext(options);
         _mockLogger = new Mock<ILogger<AiService>>();
         _cache = new MemoryCache(new MemoryCacheOptions());
+        _mockAgentProvider = new Mock<ICopilotAgentProvider>();
+
+        // Default: agent not configured (returns null)
+        _mockAgentProvider.Setup(p => p.GetAgentAsync())
+            .ReturnsAsync((Microsoft.Agents.AI.AIAgent?)null);
+        _mockAgentProvider.Setup(p => p.IsConfigured).Returns(false);
 
         SeedTestData();
     }
@@ -70,7 +77,7 @@ public class AiServiceTests : IDisposable
     public async Task GenerateParkSummaryAsync_ReturnsFallback_WhenNotConfigured()
     {
         // Arrange
-        var service = new AiService(null, _context, _cache, _mockLogger.Object);
+        var service = new AiService(_mockAgentProvider.Object, _context, _cache, _mockLogger.Object);
         var park = await _context.Parks.FirstAsync();
 
         // Act
@@ -85,7 +92,7 @@ public class AiServiceTests : IDisposable
     public async Task GetRecommendationsAsync_ReturnsFallback_WhenNotConfigured()
     {
         // Arrange
-        var service = new AiService(null, _context, _cache, _mockLogger.Object);
+        var service = new AiService(_mockAgentProvider.Object, _context, _cache, _mockLogger.Object);
         var request = new RecommendationRequest
         {
             Activities = new List<string> { "Hiking" }
@@ -105,7 +112,7 @@ public class AiServiceTests : IDisposable
     public async Task ChatAsync_ReturnsFallback_WhenNotConfigured()
     {
         // Arrange
-        var service = new AiService(null, _context, _cache, _mockLogger.Object);
+        var service = new AiService(_mockAgentProvider.Object, _context, _cache, _mockLogger.Object);
         var request = new ChatRequest { Message = "Hello" };
 
         // Act
@@ -120,7 +127,7 @@ public class AiServiceTests : IDisposable
     public async Task ChatAsync_HandlesEmptyConversationHistory()
     {
         // Arrange
-        var service = new AiService(null, _context, _cache, _mockLogger.Object);
+        var service = new AiService(_mockAgentProvider.Object, _context, _cache, _mockLogger.Object);
         var request = new ChatRequest
         {
             Message = "Hello",
@@ -139,7 +146,7 @@ public class AiServiceTests : IDisposable
     public async Task PlanVisitAsync_ThrowsException_WhenParkNotFound()
     {
         // Arrange
-        var service = new AiService(null, _context, _cache, _mockLogger.Object);
+        var service = new AiService(_mockAgentProvider.Object, _context, _cache, _mockLogger.Object);
         var request = new VisitPlanRequest
         {
             ParkId = 999,
@@ -155,7 +162,7 @@ public class AiServiceTests : IDisposable
     public async Task PlanVisitAsync_ReturnsFallback_WhenNotConfigured()
     {
         // Arrange
-        var service = new AiService(null, _context, _cache, _mockLogger.Object);
+        var service = new AiService(_mockAgentProvider.Object, _context, _cache, _mockLogger.Object);
         var request = new VisitPlanRequest
         {
             ParkId = 1,
@@ -178,7 +185,7 @@ public class AiServiceTests : IDisposable
     public async Task PlanVisitAsync_ValidatesDurationDays()
     {
         // Arrange
-        var service = new AiService(null, _context, _cache, _mockLogger.Object);
+        var service = new AiService(_mockAgentProvider.Object, _context, _cache, _mockLogger.Object);
         var request = new VisitPlanRequest
         {
             ParkId = 1,

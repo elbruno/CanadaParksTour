@@ -142,4 +142,16 @@ public class ParksApiClient
             return null;
         }
     }
+
+    public async Task<AppSettingsDto?> GetSettingsAsync()
+    {
+        try
+        {
+            return await _httpClient.GetFromJsonAsync<AppSettingsDto>("/api/settings");
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
 }

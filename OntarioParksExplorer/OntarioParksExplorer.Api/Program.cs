@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.AI;
-using OpenAI;
 using OntarioParksExplorer.Api.Data;
 using OntarioParksExplorer.Api.Services;
 using OntarioParksExplorer.Api.Services.AI;
@@ -69,20 +67,8 @@ builder.Services.AddMemoryCache();
 // Add response caching
 builder.Services.AddResponseCaching();
 
-// Configure AI Chat Client
-var aiConfig = builder.Configuration.GetSection("AI");
-var aiApiKey = aiConfig["ApiKey"];
-var aiModel = aiConfig["Model"] ?? "gpt-4o-mini";
-
-if (!string.IsNullOrEmpty(aiApiKey))
-{
-    builder.Services.AddSingleton<IChatClient>(services =>
-        new OpenAI.Chat.ChatClient(aiModel, apiKey: aiApiKey).AsIChatClient());
-}
-else
-{
-    builder.Services.AddSingleton<IChatClient>(provider => null!);
-}
+// Configure AI with Copilot SDK (uses GitHub Copilot CLI as backend)
+builder.Services.AddSingleton<ICopilotAgentProvider, CopilotAgentProvider>();
 
 // Register services
 builder.Services.AddScoped<IParksService, ParksService>();

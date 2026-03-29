@@ -56,9 +56,9 @@ Ontario Parks Explorer is a full-stack application for discovering, exploring, a
 │              ┌───────────────┼───────────────┐                          │
 │              │               │               │                          │
 │       ┌──────▼────────┐  ┌───▼────────┐ ┌──▼────────────┐              │
-│       │    SQLite     │  │ OpenAI API │ │ Health Checks │              │
-│       │   Database    │  │ (Chat GPT) │ │ & Metrics    │              │
-│       │  (EF Core)    │  │            │ │              │              │
+│       │    SQLite     │  │  GitHub   │ │ Health Checks │              │
+│       │   Database    │  │  Copilot  │ │ & Metrics    │              │
+│       │  (EF Core)    │  │  SDK      │ │              │              │
 │       └───────────────┘  └────────────┘ └──────────────┘              │
 │                                                                         │
 │                    .NET Aspire Orchestration                           │
@@ -84,8 +84,8 @@ Ontario Parks Explorer is a full-stack application for discovering, exploring, a
 - **React Router** — Client-side routing
 
 **AI & Services:**
-- **Microsoft.Extensions.AI** — Standardized AI service abstraction
-- **OpenAI API** — GPT-4o-mini for intelligent features
+- **Microsoft Agent Framework** — Standardized AI agent runtime
+- **GitHub Copilot SDK** — AI backend powered by your existing Copilot installation
 - **Aspire Dashboard** — Real-time monitoring and service health
 
 ---
@@ -121,18 +121,28 @@ cd ../..
 
 ### 3. Configure AI (Optional)
 
-To enable AI features, create or update `OntarioParksExplorer/OntarioParksExplorer.Api/appsettings.json`:
+AI features use the **GitHub Copilot SDK** and require the Copilot CLI to be installed and authenticated:
+
+```bash
+# Install Copilot CLI (if not already installed via GitHub CLI)
+gh extension install github/gh-copilot
+
+# Authenticate
+copilot auth login
+```
+
+Optionally set a preferred model in `OntarioParksExplorer/OntarioParksExplorer.Api/appsettings.json`:
 
 ```json
 {
   "AI": {
-    "ApiKey": "your-openai-api-key-here",
-    "Model": "gpt-4o-mini"
+    "Provider": "GitHubCopilot",
+    "Model": ""
   }
 }
 ```
 
-If AI key is not provided, AI endpoints will return a 503 Service Unavailable error.
+If the Copilot CLI is not available, AI endpoints will gracefully degrade with informational messages.
 
 ### 4. Run the Application
 
@@ -221,16 +231,23 @@ aspire run
 
 ### Enabling AI Services
 
-All AI features require a valid **OpenAI API key**. Set `AI:ApiKey` in `appsettings.json`:
+All AI features are powered by the **GitHub Copilot SDK** using the **Microsoft Agent Framework**. No separate API keys are needed — the app uses your existing GitHub Copilot installation.
 
+**Requirements:**
+- GitHub Copilot CLI installed and authenticated
+- Active GitHub Copilot subscription (includes free tier)
+
+**Configuration** (optional — in `appsettings.json`):
 ```json
 {
   "AI": {
-    "ApiKey": "sk-...",
-    "Model": "gpt-4o-mini"
+    "Provider": "GitHubCopilot",
+    "Model": ""
   }
 }
 ```
+
+> **Tip:** You can also set the model via the `GITHUB_COPILOT_MODEL` environment variable. Leave empty to use the default model.
 
 ### Available AI Features
 
@@ -399,8 +416,8 @@ dotnet ef migrations remove --project OntarioParksExplorer.Api
     "AllowedOrigins": ["http://localhost:5173", "https://localhost:5173"]
   },
   "AI": {
-    "ApiKey": "",
-    "Model": "gpt-4o-mini"
+    "Provider": "GitHubCopilot",
+    "Model": ""
   }
 }
 ```
@@ -419,10 +436,11 @@ If ports are already in use:
 
 ### AI Features Not Working
 
-- Verify `AI:ApiKey` is set in `appsettings.json`
-- Confirm OpenAI API key is valid and has available credits
+- Verify GitHub Copilot CLI is installed (`copilot --version`)
+- Ensure you are authenticated (`copilot auth login`)
+- Check the Settings page in the Blazor app for AI status
 - Check API logs in Aspire Dashboard for errors
-- Verify network connectivity to `api.openai.com`
+- Verify your GitHub Copilot subscription is active
 
 ### Database Issues
 
