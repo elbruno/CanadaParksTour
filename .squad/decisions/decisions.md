@@ -28,6 +28,37 @@ Created `docs/JOURNEY.md` as a 7-chapter narrative organized around the git comm
 
 ---
 
+## Decision: LifeLog AI PRD Structure as Reusable Template
+
+**Author:** Malcolm (Lead/Architect)  
+**Date:** 2026-03-29  
+**Status:** Accepted
+
+### Context
+
+The `docs/lifelog_ai_prompt.md` skeleton was insufficient for Squad to produce a correct build on first pass. The OntarioParksExplorer experience proved that AI teams drift from specs — especially on AI provider choice — unless constraints are stated explicitly and redundantly.
+
+### Decision
+
+The enriched LifeLog AI PRD establishes a template pattern for future Squad PRDs:
+
+1. **Meta-instruction header** — tells Squad to create team + plan before implementing
+2. **Stack table with warnings** — critical constraints called out with ⚠️ markers
+3. **Architecture constraints** — non-negotiable patterns that prevent known failure modes
+4. **Data model with seed data** — prevents "Test Entry 1" quality issues
+5. **Lessons learned section** — explicit warnings about pitfalls from prior builds
+6. **Three-phase execution** — plan → implement → polish with human review gates
+
+### Key Constraint
+
+AI provider is specified THREE times (stack table, architecture section, lessons learned) because the #1 lesson from OntarioParksExplorer is that AI teams default to OpenAI unless repeatedly told otherwise.
+
+### Impact
+
+Future PRDs for Squad should follow this structure. The redundancy is intentional — it's cheaper to repeat yourself in a PRD than to rework a completed implementation.
+
+---
+
 ## Decision: Documentation Narrative Standards
 
 **Author:** Malcolm  
