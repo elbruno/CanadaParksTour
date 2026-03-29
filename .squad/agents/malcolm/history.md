@@ -340,3 +340,49 @@ Malcolm led the foundational architecture decisions for OntarioParksExplorer. Es
 - Define actual API endpoints (park data, etc.)
 - Blazor component development
 - Production CORS configuration
+
+### LifeLog AI PRD: Enriched from Skeleton to Battle-Tested PRD (2026-04-11)
+
+**Task:** Transform `docs/lifelog_ai_prompt.md` from a 49-line skeleton into a comprehensive, standalone PRD (262 lines) that encodes all lessons learned from OntarioParksExplorer.
+
+**What Changed:**
+- Added Squad meta-instruction header (team + plan creation before implementation)
+- Expanded product description with target audience and demo-readiness requirement
+- Stack requirements table with CRITICAL AI provider warning (Copilot SDK only, not OpenAI)
+- Architecture constraints section encoding all OntarioParksExplorer patterns: three-layer architecture, IAiService abstraction, graceful degradation, idempotent seeding, DTOs, Aspire service discovery
+- Full data model with entity table, indexes, relationships, and 4 realistic seed sessions
+- Detailed core features (sessions CRUD, entries CRUD, timeline, search, pagination)
+- 6 AI feature endpoints with descriptions, all routed through IAiService
+- Frontend requirements for both Blazor (MudBlazor) and React (TypeScript/Vite) with route tables
+- Complete API endpoint reference (16 endpoints across sessions, entries, search, AI)
+- Testing requirements (xUnit, Playwright E2E, screenshot automation)
+- Documentation requirements (README, User Manual, Demo Script)
+- "Lessons from OntarioParksExplorer" section with 10 hard-won warnings
+- Three-phase execution instructions for Squad orchestration
+
+**Key Design Decision:** The PRD explicitly warns about AI provider drift THREE times — in the stack table, architecture constraints, and lessons learned. This is the #1 lesson from OntarioParksExplorer where Grant defaulted to OpenAI despite the PRD specifying Copilot SDK.
+
+**Impact:** This PRD can be given to a brand new repo with Squad installed and should produce a correctly-built LifeLog AI app on the first pass, without repeating the mistakes from OntarioParksExplorer.
+
+### Copilot Environment Audit & Documentation (2026-04-11)
+
+**Deliverable:** `docs/COPILOT_ENVIRONMENT.md` — comprehensive audit of the project's Copilot/AI development environment with prioritized improvement roadmap.
+
+**Key Findings:**
+- 8-agent Squad team is fully operational with 4 GitHub Actions workflows
+- 3 skills installed, but project-conventions skill is still a **placeholder** (zero customization)
+- GitHub MCP exists in config but is **inactive** (EXAMPLE- prefix)
+- No `copilot-instructions.md` exists — Copilot has no project-specific standards
+- No marketplace registered — can't pull from awesome-copilot ecosystem
+- Aspire skill is duplicated across `.github/skills/` and `.squad/skills/`
+
+**Prioritized Improvements (6 High, 6 Medium, 5 Low):**
+- High: Activate GitHub MCP, create copilot-instructions.md, customize conventions skill, install copilot-sdk/ef-core/csharp-xunit skills
+- Medium: Register awesome-copilot marketplace, install dotnet-best-practices, add Playwright MCP, Azure deployment skill
+- Low: Supplementary skills (csharp-async, csharp-docs, conventional-commit)
+
+**Suggested New Team Members:** Azure Deploy Expert and DevOps/CI Agent to fill deployment automation gaps.
+
+**Source:** Environment data gathered by Squad Coordinator; awesome-copilot skill catalog (27.5k stars) cross-referenced against project stack.
+
+**Impact:** Provides a concrete, actionable roadmap to strengthen the AI-assisted development environment. Each suggestion includes specific commands or file edits.
