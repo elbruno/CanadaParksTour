@@ -136,14 +136,7 @@ If AI key is not provided, AI endpoints will return a 503 Service Unavailable er
 
 ### 4. Run the Application
 
-**Using Aspire (Recommended):**
-
-```bash
-cd OntarioParksExplorer
-dotnet run --project OntarioParksExplorer.AppHost
-```
-
-Or simply:
+**Using Aspire CLI (Recommended):**
 
 ```bash
 aspire run
@@ -436,7 +429,7 @@ If ports are already in use:
 ```bash
 # Reset database (remove and recreate)
 rm OntarioParksExplorer/OntarioParksExplorer.Api/parks.db
-dotnet run --project OntarioParksExplorer.AppHost
+aspire run
 ```
 
 ### Aspire CLI Not Found
