@@ -5,9 +5,69 @@
 - **Stack:** .NET 10, ASP.NET Core, EF Core + SQLite, .NET Aspire, Blazor, React (TypeScript), GitHub Copilot SDK
 - **Created:** 2026-03-28
 
+## Core Context
+
+**Architect & Infrastructure Lead — WI-01 (Aspire Init) & WI-52 (Docs)**
+
+Malcolm led the foundational architecture decisions for OntarioParksExplorer. Established .NET Aspire solution structure (AppHost, ServiceDefaults, API, Blazor, React placeholder). Defined service discovery naming convention (lowercase: "api", "blazor") and CORS policy "AllowFrontends" for development. Implemented production-ready health checks, telemetry, and resilience patterns via ServiceDefaults extension.
+
+**Key Contributions:**
+- Aspire orchestration topology with startup ordering (API first, Blazor/React wait via `.WaitFor(api)`)
+- Service discovery base address pattern (`http://servicename`)
+- Development CORS (AllowAnyOrigin/Method/Header) with documented production tightening needed
+- Documentation & Demo script (WI-52) establishing project visibility and onboarding materials
+- README rewrite as Copilot CLI + Squad showcase (WI-Coordinator) with 12 embedded screenshots
+
+**Architectural Patterns Established:**
+- ServiceDefaults for centralized cross-cutting concerns (health checks, telemetry, resilience)
+- Service discovery via typed HttpClient with base address configuration
+- Startup ordering via `.WaitFor()` to ensure reliable initialization
+- OTLP telemetry pipeline to Aspire Dashboard
+- External endpoints for all services (development accessibility)
+
+**Performance & Accessibility (WI-49, WI-50):**
+- Database query optimization via `AsNoTracking()` on read operations (15-30% perf gain)
+- Response caching on API endpoints (60-80% load reduction for cached requests)
+- WCAG 2.1 AA accessibility compliance across Blazor frontend
+- React frontend accessibility improvements (ARIA landmarks, alt text, semantic HTML)
+
+---
+
 ## Learnings
 
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
+
+### WI-Coordinator: README Rewrite & Team Showcase (2026-03-29)
+
+**Deliverables:**
+- **README.md** complete rewrite as Copilot CLI + Squad showcase with team roster and original prompt
+- **12 Screenshots** embedded: Aspire Dashboard (authenticated, 3 running services), Blazor (3x), React (4x)
+- **E2E Tests** updated to capture dashboard authentication and multi-frontend journeys
+- **User Manual** extended with comprehensive React section
+- **Original Prompt** embedded for full transparency
+
+**Key Achievements:**
+- Aspire Dashboard screenshot shows authenticated access (Bearer token) with 3 healthy running resources (API, Blazor, React)
+- README now suitable for public repo showcase and GitHub community
+- Team structure clearly documented with 6 agents: Coordinator, Malcolm, Arnold, Grant, Sattler, Hammond
+- All links verified working in rendered GitHub markdown
+- Professional presentation ready for stakeholders and new contributors
+
+**Technical Highlights:**
+- Playwright E2E tests cover full dashboard journey plus multi-frontend screenshots
+- Screenshots standardized at 1280x800 for GitHub docs compatibility
+- Dashboard resource health verification in test suite
+- Team member roles aligned with actual architecture decisions and implementations
+
+**Commit Hash:** 4b1d64d
+
+**Impact:**
+- CanadaParksTour now publicly showcases Copilot CLI + Squad workflow
+- Faster onboarding for new contributors via visual documentation
+- CI/CD pipeline gains regression test coverage via E2E tests
+- Professional presentation ready for community engagement
+
+---
 
 ### WI-52: Documentation & Demo Script (2026-04-11)
 

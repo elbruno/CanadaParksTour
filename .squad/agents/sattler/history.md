@@ -5,7 +5,48 @@
 - **Stack:** .NET 10, ASP.NET Core, EF Core + SQLite, .NET Aspire, Blazor, React (TypeScript), GitHub Copilot SDK
 - **Created:** 2026-03-28
 
+## Core Context
+
+**Frontend Architect — Blazor & React Implementation (WI-07-08, WI-16-22, WI-23-31, WI-39-40)**
+
+Sattler led complete dual-frontend implementation for OntarioParksExplorer. Established MudBlazor for Blazor frontend (Material Design components) and custom CSS for React (Vite bundler, TypeScript, modern SPA patterns). Implemented comprehensive feature sets across both: parks listing with search/filter, favorites with localStorage persistence, park details with image galleries, interactive maps, and AI integrations (summaries, recommendations, chat, visit planner).
+
+**Blazor Frontend (WI-16 through WI-22):**
+- Created typed ParksApiClient service with 5 core methods (GetParks, GetParkById, SearchParks, FilterParks, GetActivities)
+- Built Parks.razor with pagination, debounced search (300ms), multi-select activity filters, responsive MudGrid layout
+- Implemented Park Detail with image carousel, breadcrumbs, favorite toggle, Leaflet map integration
+- Created Favorites page with localStorage sync and empty state handling
+- Integrated Map.razor with Leaflet JavaScript interop (initMap, addMarker, flyTo functions)
+- Added AI features: summary generation, visit planner (day-by-day itineraries), recommendations widget, chat interface
+
+**React Frontend (WI-24 through WI-30):**
+- Built complete TypeScript type system (ParkListDto, ParkDetailDto, ActivityDto, PagedResult<T>)
+- Implemented axios API client with error handling and smart endpoint selection (search vs filter vs default)
+- Created responsive Parks component with pagination, debounced search, activity filter chips
+- Developed Park Detail page with image gallery (prev/next, thumbnails), linked map view
+- Implemented Favorites via custom useFavorites hook and React Context (FavoritesProvider)
+- Integrated react-leaflet Map component showing all parks with popups
+- Added AI features matching Blazor: park summaries, recommendations page, chat interface, visit planner modal
+
+**AI Features (WI-39, WI-40):**
+- Blazor: AI DTOs, ParksApiClient AI methods, UI components for summary/recommendations/chat/planner
+- React: AI types, api.ts AI endpoints, styled components with loading states and conversation history
+- Both frontends cache AI summaries and maintain full chat history for context
+
+**Latest Work (2026-03-29):**
+- Captured 4 React frontend screenshots for README showcase (home, parks, detail, chat)
+- Updated Playwright E2E tests with authenticated Aspire Dashboard access
+- Added comprehensive React section to USER_MANUAL.md with startup, navigation, features, and development notes
+- Verified all GitHub markdown image links and optimized screenshots for docs (1280x800 PNG)
+
 ## Learnings
+
+### 2026-03-29 - README Screenshots & User Manual React Section
+- **Screenshot Capture**: Captured 4 React frontend screenshots for README showcase: home page, parks list with filters, park details with AI features, AI chat interface. Integrated with Aspire Dashboard screenshots showing all 3 running services.
+- **E2E Test Enhancement**: Updated Playwright tests (full-journey.spec.ts) with authenticated Aspire Dashboard access (Bearer token), resource health verification (3 services), and multi-frontend screenshot capture sequence.
+- **User Manual React Section**: Added comprehensive React frontend walkthrough to docs/USER_MANUAL.md including startup instructions (npm install, npm run dev), navigation routes, feature descriptions, development notes (Vite, TypeScript, API proxy), build commands, and visual screenshots showing all major features.
+- **Team Showcase Integration**: React frontend featured prominently in team roster as Sattler's implementation showcase, highlighting TypeScript, responsive design, and AI feature integration. Screenshots demonstrate modern SPA with Vite bundler and context API state management.
+- **Documentation Quality**: All image links verified working in rendered GitHub markdown. Screenshots optimized for GitHub docs (1280x800 PNG format). Maintained consistency with Blazor documentation format while highlighting React-specific features (Vite, hooks, context API vs Blazor services).
 
 ### 2026-03-28 - Initial Frontend Setup (WI-07, WI-08, WI-23, WI-31)
 - **Blazor Setup**: Enhanced existing Blazor Web App with MudBlazor 9.2.0 for UI components. Configured in Program.cs with AddMudServices(), added CSS/JS references in App.razor, and imported MudBlazor namespace in _Imports.razor.
