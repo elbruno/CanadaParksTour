@@ -108,3 +108,13 @@ Sattler led complete dual-frontend implementation for OntarioParksExplorer. Esta
 
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
 
+### 2026-03-29 - Blazor Interactive Server Render Mode Fix
+- **Root Cause Identified**: Blazor app had broken interactivity (favorite buttons, MudSelect dropdowns unresponsive) due to missing `@rendermode InteractiveServer` directive on Routes.razor component.
+- **Fix Applied**: Added `@rendermode InteractiveServer` to the top of Components/Routes.razor. In .NET 10 Blazor, the Routes component must have the render mode specified for SignalR-based interactivity to function across all routed pages.
+- **Key Insight**: While individual pages can specify `@rendermode InteractiveServer`, the Routes component itself needs this directive for app-wide interactive server behavior. Without it, event handlers (`@onclick`, `SelectedValuesChanged`) don't bind properly even if pages have the render mode.
+- **Verification**: Build succeeded with no errors. This fix enables:
+  - Favorite toggle buttons (heart icons) with localStorage persistence via FavoritesService
+  - MudSelect activity filter dropdowns with multi-selection binding
+  - All other Blazor interactive components (search debounce, pagination clicks, navigation)
+- **File Path**: `D:\labs\CanadaParksTour\OntarioParksExplorer\OntarioParksExplorer.Blazor\Components\Routes.razor`
+
