@@ -37,6 +37,56 @@ Malcolm led the foundational architecture decisions for OntarioParksExplorer. Es
 
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
 
+### JOURNEY.md v2: Rewritten with Correct Narrative Arc (2026-04-11)
+
+**Task:** Complete rewrite of `docs/JOURNEY.md` to fix fundamental narrative error.
+
+**The Problem with v1:**
+- v1 fabricated a generic one-liner as "the original prompt"
+- Framed OpenAI→Copilot SDK change as a surprise "pivot" or scope change
+- Missed the real story: the original PRD explicitly specified Copilot SDK from day one
+
+**The Truth (from docs/ontario_parks_explorer_prompt.md):**
+- Original PRD clearly stated: "GitHub Copilot SDK for AI-related features"
+- Meta-instruction: "create a team and a plan. Do not implement anything."
+- This was planning-driven development, not ad-hoc coding
+- Team built correctly (commit 2a60baf: team init, commit 262d55a: implementation)
+- BUT: Grant used OpenAI instead of specified Copilot SDK — spec drift
+- Bruno caught the deviation and enforced the original spec
+- This is MUCH more interesting: AI teams can drift from specs, humans enforce them
+
+**New Narrative Structure (7 chapters, ~350 lines):**
+
+1. **The PRD** — Full original prompt quoted verbatim (40 lines), meta-instruction emphasized
+2. **Assembling the Team** — Commit 2a60baf, 8 agents, planning before implementation
+3. **First Build — The Foundation** — Commit 262d55a, complete implementation BUT with OpenAI (wrong provider)
+4. **The Human Catches the Drift** — Bruno enforces original spec, Grant swaps providers, abstraction layers save the day
+5. **Polish & Documentation** — Commits 6040ecb, 374025a, 332c165, 4b1d64d, screenshot automation
+6. **The Decisions Trail** — 4 decisions reframed as enablers of the correction (three-layer arch made swap surgical)
+7. **What's in the Box** — Final inventory, commit timeline (11 commits total)
+
+**Key Narrative Insights:**
+- "The PRD said Copilot SDK. The team built OpenAI. The human caught it." — this is the headline
+- Abstraction layers ACCIDENTALLY saved the team when the correction came
+- Good architecture makes pivots cheap (even when you build the wrong thing initially)
+- AI teams need human product management to enforce specs
+- Decisions trail shows that architectural choices enabled the painless course correction
+
+**The Takeaway (rewritten):**
+- "The prompt is the product specification. The human is the product manager. And sometimes the QA team too."
+- AI teams can build from specs. But they can also drift. The human's job is to catch deviations.
+- The original PRD was right. The AI got it wrong. The human fixed it. That's the workflow.
+
+**Tone:** Technical postmortem, honest about failures, no marketing fluff. Ends with Malcolm's wry voice about "life finds a way" and debugging JavaScript timing bugs at 2 AM.
+
+**Impact:**
+- Corrects the historical record: this wasn't a pivot, it was spec enforcement
+- Makes the story MORE compelling: proves AI teams need human oversight
+- Highlights the value of good architecture: abstraction layers made the correction surgical
+- Documents the REAL workflow: AI builds fast, humans catch drift, good architecture makes fixes cheap
+
+---
+
 ### JOURNEY.md: From Prompt to Production Narrative (2026-04-11)
 
 **Deliverable:** `docs/JOURNEY.md` — narrative document telling the story of how the Squad team built OntarioParksExplorer from natural language prompts.

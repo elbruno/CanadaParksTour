@@ -10,17 +10,20 @@
 
 ## 🤖 Built with AI — The Original Prompt
 
-This entire application was created and maintained using **GitHub Copilot CLI** with the **Squad** agent orchestration framework. Here's the prompt that kicked off the major development work:
+This entire application was created and maintained using **GitHub Copilot CLI** with the **Squad** agent orchestration framework. Here's the PRD that started it all ([full prompt](docs/ontario_parks_explorer_prompt.md)):
 
-> *"The AI chat feature should not use OpenAI APIs, it should use Microsoft Agent Framework and Copilot SDK Agents, so we can reuse the current Copilot installation. Also in the Blazor web app, the map is not showing — do we need a key or similar? Add a configuration or settings page if they are needed to set these keys or values. Process all of this and complete the work. Once completed, take screenshots and create a user manual. Push everything to the repo once it's done."*
+> *"Build an Ontario Parks Explorer app using .NET 10, Aspire, Blazor, React, and GitHub Copilot SDK. Create a modern full-stack application that allows users to explore parks in Ontario, view details about each park, and interact with the data in a visual and intuitive way."*
 
-From that single prompt, the Squad team:
-- Replaced the OpenAI backend with **GitHub Copilot SDK** + **Microsoft Agent Framework**
-- Fixed the Blazor interactive map (timing bug with Leaflet initialization)
-- Created a **Settings page** showing AI and map configuration status
-- Took automated screenshots using **Playwright**
-- Generated a comprehensive **User Manual** with embedded screenshots
-- Wrote **46 passing unit tests** and **E2E test specs**
+The meta-instruction: **"Create a team and a plan to complete this. Do not implement anything."** — planning before coding.
+
+From that PRD, the Squad team:
+- Built a complete **full-stack .NET Aspire application** with dual frontends (Blazor + React)
+- Seeded **67 Ontario Provincial Parks** with activities, coordinates, and images
+- Integrated **GitHub Copilot SDK** for AI-powered park summaries, chat, and visit planning
+- Created **46+ unit tests** and **Playwright E2E specs** with automated screenshot capture
+- Produced a **User Manual**, **Demo Script**, and **Journey narrative**
+
+> 📖 Read the full story in [**JOURNEY.md**](docs/JOURNEY.md) — including how the AI team drifted from spec and the human caught it.
 
 ---
 
