@@ -110,8 +110,8 @@ cd OntarioParksExplorer
 ### 2. Install Dependencies
 
 ```bash
-# Install .NET tools (one-time)
-dotnet tool update -g dotnet-aspire-cli
+# Install Aspire CLI (one-time) — see https://aspire.dev/install
+irm https://aspire.dev/install.ps1 | iex
 
 # Install Node dependencies for React frontend
 cd OntarioParksExplorer/OntarioParksExplorer.React
@@ -441,8 +441,12 @@ dotnet run --project OntarioParksExplorer.AppHost
 
 ### Aspire CLI Not Found
 
-```bash
-dotnet tool update -g dotnet-aspire-cli
+```powershell
+# PowerShell
+irm https://aspire.dev/install.ps1 | iex
+
+# Bash
+curl -sSL https://aspire.dev/install.sh | bash
 ```
 
 ---
