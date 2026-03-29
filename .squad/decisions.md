@@ -155,6 +155,25 @@ Single `AiController` with route prefix `/api/ai` containing four AI-powered end
 
 ---
 
+### 14. Blazor Interactive Server Render Mode — Routes Component (Sattler, 2026-03-29)
+**Status:** Implemented
+
+**Problem:** Blazor app interactivity was broken — favorite button clicks and MudSelect activity filter dropdown were unresponsive. All interactive components using event handlers were non-functional.
+
+**Root Cause:** Missing `@rendermode InteractiveServer` directive on the `Components/Routes.razor` component. In .NET 10 Blazor, while individual pages can specify render modes, the Routes component itself must also have the render mode for SignalR-based interactivity to work app-wide.
+
+**Solution:** Added `@rendermode InteractiveServer` to the top of `Components/Routes.razor`. This establishes the SignalR circuit across all routed components.
+
+**Impact:**
+- ✅ Favorite buttons now work with localStorage persistence
+- ✅ MudSelect activity filters respond to clicks and selection
+- ✅ All Blazor interactive components functional (search, pagination, navigation)
+- ✅ SignalR connection established properly for real-time updates
+
+**Key Learning:** In .NET 10 Blazor with Interactive Server mode, the Routes component must also specify the render mode. Individual pages with `@rendermode` directive alone are insufficient for SignalR circuit establishment.
+
+---
+
 ## Governance
 
 - All meaningful changes require team consensus
