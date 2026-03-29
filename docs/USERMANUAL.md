@@ -282,6 +282,28 @@ All AI endpoints use the **GitHub Copilot SDK** backend for intelligent response
 
 ---
 
+## React Frontend
+
+Ontario Parks Explorer also includes a **React** frontend built with TypeScript and Vite. It provides the same core features with a modern single-page application experience.
+
+![React Home Page](../screenshots/10-react-home.png)
+
+### Features
+
+The React frontend includes:
+- **Home Page** — Welcome banner with navigation cards
+- **Browse Parks** — Search and filter parks with activity filters
+- **Map View** — Interactive Leaflet map with park markers
+- **Favorites** — Save parks to your favorites list
+- **AI Recommendations** — Get personalized park suggestions
+- **AI Chat** — Conversational assistant for park questions
+
+### Accessing React
+
+When running with `aspire run`, the React frontend URL is shown in the Aspire Dashboard. Navigate to the React resource URL (typically `http://localhost:5173` or a dynamically assigned port).
+
+---
+
 ## Troubleshooting
 
 ### AI Features Not Working

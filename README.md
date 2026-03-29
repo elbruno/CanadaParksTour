@@ -1,27 +1,76 @@
-# Ontario Parks Explorer
+# 🏕️ Ontario Parks Explorer
 
-Explore Ontario Provincial Parks with AI-powered insights, intelligent recommendations, and interactive maps.
+> **A sample end-to-end application built entirely with [GitHub Copilot CLI](https://github.com/github/copilot-cli) and [Squad](https://github.com/bradygaster/squad)** — demonstrating how AI-powered development tools can create a production-quality, full-stack .NET Aspire application from a natural language prompt.
 
-![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?logo=.net) ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-8-512BD4) ![Blazor](https://img.shields.io/badge/Blazor-Interactive-7952B3) ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react) ![SQLite](https://img.shields.io/badge/SQLite-Latest-003B57?logo=sqlite) ![.NET Aspire](https://img.shields.io/badge/.NET%20Aspire-Orchestration-512BD4)
+![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?logo=.net) ![Blazor](https://img.shields.io/badge/Blazor-Interactive-7952B3) ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react) ![.NET Aspire](https://img.shields.io/badge/.NET%20Aspire-Orchestration-512BD4) ![GitHub Copilot SDK](https://img.shields.io/badge/Copilot%20SDK-AI%20Powered-000?logo=github) ![SQLite](https://img.shields.io/badge/SQLite-Latest-003B57?logo=sqlite)
+
+![Aspire Dashboard](screenshots/08-aspire-dashboard.png)
+
+---
+
+## 🤖 Built with AI — The Original Prompt
+
+This entire application was created and maintained using **GitHub Copilot CLI** with the **Squad** agent orchestration framework. Here's the prompt that kicked off the major development work:
+
+> *"The AI chat feature should not use OpenAI APIs, it should use Microsoft Agent Framework and Copilot SDK Agents, so we can reuse the current Copilot installation. Also in the Blazor web app, the map is not showing — do we need a key or similar? Add a configuration or settings page if they are needed to set these keys or values. Process all of this and complete the work. Once completed, take screenshots and create a user manual. Push everything to the repo once it's done."*
+
+From that single prompt, the Squad team:
+- Replaced the OpenAI backend with **GitHub Copilot SDK** + **Microsoft Agent Framework**
+- Fixed the Blazor interactive map (timing bug with Leaflet initialization)
+- Created a **Settings page** showing AI and map configuration status
+- Took automated screenshots using **Playwright**
+- Generated a comprehensive **User Manual** with embedded screenshots
+- Wrote **46 passing unit tests** and **E2E test specs**
+
+---
+
+## 🦖 Meet the Squad Team
+
+This repository is maintained by a Squad team cast from the **Jurassic Park** universe. Each agent has specialized expertise and persistent memory of the project:
+
+| Agent | Role | What They Do |
+|-------|------|-------------|
+| 🏗️ **Malcolm** | Lead / Architect | Architecture decisions, code review, scope arbitration |
+| 🔧 **Arnold** | Backend Dev | ASP.NET Core APIs, EF Core, database, services |
+| ⚛️ **Sattler** | Frontend Dev | Blazor UI, React frontend, map integration, UX |
+| 🤖 **Grant** | AI Dev | Copilot SDK integration, prompt engineering, agent design |
+| 🧪 **Muldoon** | Tester | Unit tests, E2E tests, quality gates, edge cases |
+| ⚙️ **Hammond** | Aspire Expert | .NET Aspire orchestration, service discovery, dashboards |
+| 📋 **Scribe** | Session Logger | Decisions, memory, cross-agent context sharing |
+| 🔄 **Ralph** | Work Monitor | Work queue, backlog tracking, CI/CD monitoring |
+
+> The Squad framework assigns persistent character names as easter eggs — they don't affect behavior, just make the team memorable. 🦕
+
+---
 
 ## Overview
 
-Ontario Parks Explorer is a full-stack application for discovering, exploring, and planning visits to Ontario Provincial Parks. The application combines traditional park discovery features (search, filter, map visualization) with AI-powered features like intelligent summaries, personalized recommendations, and an interactive park planning assistant.
+Ontario Parks Explorer is a full-stack application for discovering, exploring, and planning visits to Ontario Provincial Parks. It combines traditional park discovery features with AI-powered features — all orchestrated with .NET Aspire.
 
-### Features
+### ✨ Features
 
-- **Park Discovery**: Browse and paginate through Ontario Provincial Parks with featured highlights
-- **Search & Filter**: Search parks by name/description and filter by activities (hiking, camping, fishing, etc.)
-- **Interactive Maps**: View park locations with Leaflet-based map visualization
-- **Park Details**: Comprehensive information including activities, contact info, coordinates, and images
-- **Favorites Management**: Save favorite parks for quick access (client-side)
-- **AI Features**:
-  - **Park Summaries**: Generate engaging, AI-powered summaries for any park
-  - **Smart Recommendations**: Get personalized park recommendations based on your preferences and interests
-  - **AI Chat Assistant**: Ask questions about Ontario parks and get intelligent responses
-  - **Visit Planner**: Generate day-by-day visit plans tailored to your duration, interests, and season
-- **Dual Frontends**: Choose between interactive Blazor or modern React interface — same data, same features
-- **Modern Architecture**: Orchestrated with .NET Aspire, microservice-ready design
+| Feature | Description |
+|---------|-------------|
+| 🔍 **Park Discovery** | Browse, search, and filter 67+ Ontario Provincial Parks |
+| 🗺️ **Interactive Maps** | Leaflet-powered map with park markers and location data |
+| 🤖 **AI Chat** | Ask questions about parks using GitHub Copilot SDK |
+| 📋 **Visit Planner** | AI-generated day-by-day itineraries |
+| ⭐ **Favorites** | Save parks for quick access (client-side) |
+| 💡 **Recommendations** | Personalized park suggestions based on your preferences |
+| ⚙️ **Settings** | View AI and map configuration status |
+| 📊 **Aspire Dashboard** | Real-time service health, logs, and metrics |
+
+### Blazor Frontend
+
+![Blazor Home](screenshots/01-home.png)
+
+![Blazor Parks](screenshots/02-parks.png)
+
+![Interactive Map](screenshots/04-map.png)
+
+### React Frontend
+
+![React Home](screenshots/10-react-home.png)
 
 ---
 
@@ -69,103 +118,73 @@ Ontario Parks Explorer is a full-stack application for discovering, exploring, a
 
 ### Tech Stack
 
-**Backend:**
-- **.NET 10** — Latest .NET runtime
-- **ASP.NET Core** — High-performance web framework
-- **Entity Framework Core** — ORM for data access
-- **SQLite** — Lightweight embedded database
-- **.NET Aspire** — Orchestration and service discovery
-
-**Frontends:**
-- **Blazor Web** — Interactive server-rendered UI with MudBlazor components
-- **React 19** — Modern SPA with TypeScript
-- **Vite** — Lightning-fast build tool for React
-- **Leaflet** — Interactive map visualization
-- **React Router** — Client-side routing
-
-**AI & Services:**
-- **Microsoft Agent Framework** — Standardized AI agent runtime
-- **GitHub Copilot SDK** — AI backend powered by your existing Copilot installation
-- **Aspire Dashboard** — Real-time monitoring and service health
-
----
-
-## Prerequisites
-
-- **.NET 10 SDK** ([download](https://dotnet.microsoft.com/download))
-- **Node.js 18+** ([download](https://nodejs.org/))
-- **Aspire CLI** (optional, installed automatically with .NET 10)
+| Layer | Technology |
+|-------|-----------|
+| **Backend** | .NET 10, ASP.NET Core, Entity Framework Core, SQLite |
+| **Blazor Frontend** | Blazor Server, MudBlazor components, Leaflet maps |
+| **React Frontend** | React 19, TypeScript, Vite, React Router |
+| **AI** | GitHub Copilot SDK, Microsoft Agent Framework |
+| **Orchestration** | .NET Aspire (service discovery, health checks, dashboard) |
+| **Testing** | xUnit, Playwright (E2E), 46+ unit tests |
 
 ---
 
 ## Getting Started
 
-### 1. Clone and Navigate
+### Prerequisites
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- [Node.js 18+](https://nodejs.org/)
+- [Aspire CLI](https://aspire.dev/install) — `irm https://aspire.dev/install.ps1 | iex`
+
+### 1. Clone and Install
 
 ```bash
 git clone https://github.com/elbruno/CanadaParksTour.git
-cd OntarioParksExplorer
+cd CanadaParksTour/OntarioParksExplorer
+
+# Install React dependencies
+cd OntarioParksExplorer.React && npm install && cd ..
 ```
 
-### 2. Install Dependencies
-
-```bash
-# Install Aspire CLI (one-time) — see https://aspire.dev/install
-irm https://aspire.dev/install.ps1 | iex
-
-# Install Node dependencies for React frontend
-cd OntarioParksExplorer/OntarioParksExplorer.React
-npm install
-cd ../..
-```
-
-### 3. Configure AI (Optional)
-
-AI features use the **GitHub Copilot SDK** and require the Copilot CLI to be installed and authenticated:
-
-```bash
-# Install Copilot CLI (if not already installed via GitHub CLI)
-gh extension install github/gh-copilot
-
-# Authenticate
-copilot auth login
-```
-
-Optionally set a preferred model in `OntarioParksExplorer/OntarioParksExplorer.Api/appsettings.json`:
-
-```json
-{
-  "AI": {
-    "Provider": "GitHubCopilot",
-    "Model": ""
-  }
-}
-```
-
-If the Copilot CLI is not available, AI endpoints will gracefully degrade with informational messages.
-
-### 4. Run the Application
-
-**Using Aspire CLI (Recommended):**
+### 2. Run with Aspire
 
 ```bash
 aspire run
 ```
 
-**What launches:**
-- **Aspire Dashboard** → https://localhost:17236 (service monitoring)
-- **Blazor App** → https://localhost:7001 (interactive server UI)
-- **React App** → https://localhost:5173 (modern SPA)
-- **API** → https://localhost:7002 (REST endpoints)
+This starts all services and shows the **Aspire Dashboard URL with login token**:
 
-### 5. Access the Dashboards
+```
+   Dashboard:  https://localhost:17139/login?t=<your-token-here>
+```
 
-| Service | URL | Purpose |
-|---------|-----|---------|
-| **Aspire Dashboard** | https://localhost:17236 | Monitor services, health, and logs |
-| **Blazor Frontend** | https://localhost:7001 | Interactive park explorer (server-rendered) |
-| **React Frontend** | https://localhost:5173 | Modern park explorer (SPA) |
-| **Swagger API Docs** | https://localhost:7002/swagger | API documentation and testing |
+Click the dashboard URL to see all running services:
+
+![Aspire Dashboard](screenshots/08-aspire-dashboard.png)
+
+### 3. Access the Application
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Aspire Dashboard** | Shown in terminal output | Service health, logs, metrics |
+| **Blazor Frontend** | https://localhost:7113 | Interactive server-rendered UI |
+| **React Frontend** | http://localhost:5173 | Modern SPA |
+| **API + Swagger** | https://localhost:7054/swagger | REST API documentation |
+
+> **Note:** Ports are dynamically assigned by Aspire. Check the dashboard for actual URLs.
+
+### 4. Enable AI Features (Optional)
+
+AI features use **GitHub Copilot SDK** — no API keys needed, just your existing Copilot installation:
+
+```bash
+# Install and authenticate Copilot CLI
+gh extension install github/gh-copilot
+copilot auth login
+```
+
+If the Copilot CLI is not available, AI endpoints gracefully degrade with informational messages.
 
 ---
 
@@ -175,104 +194,22 @@ aspire run
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/parks` | List all parks (paginated, 12 per page) |
-| `GET` | `/api/parks/{id}` | Get detailed park information |
-| `GET` | `/api/parks/search?q=query` | Search parks by name or description |
-| `GET` | `/api/parks/filter?activities=hiking,camping&mode=any` | Filter by activities (any/all mode) |
-| `GET` | `/api/activities` | List all available activities |
+| `GET` | `/api/parks` | List parks (paginated, 12/page) |
+| `GET` | `/api/parks/{id}` | Park details |
+| `GET` | `/api/parks/search?q=query` | Search by name/description |
+| `GET` | `/api/parks/filter?activities=hiking&mode=any` | Filter by activities |
+| `GET` | `/api/activities` | List all activities |
 
-**Query Parameters:**
-- `page` — Page number (default: 1)
-- `pageSize` — Items per page (default: 12, max: 100)
-- `q` — Search query
-- `activities` — Comma-separated activity names
-- `mode` — Filter mode: `any` (at least one activity) or `all` (all activities)
-
-### AI Features
+### AI
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/api/ai/parks/{id}/summary` | Generate AI summary for a park |
-| `POST` | `/api/ai/recommendations` | Get personalized park recommendations |
-| `POST` | `/api/ai/chat` | Chat with AI about parks |
-| `POST` | `/api/ai/plan-visit` | Generate a visit plan for a park |
+| `POST` | `/api/ai/parks/{id}/summary` | Generate AI park summary |
+| `POST` | `/api/ai/recommendations` | Personalized recommendations |
+| `POST` | `/api/ai/chat` | Chat about parks |
+| `POST` | `/api/ai/plan-visit` | Day-by-day visit planner |
 
-**Request Bodies:**
-
-**Recommendations:**
-```json
-{
-  "activities": ["hiking", "camping"],
-  "region": "Muskoka",
-  "preferenceText": "I love scenic views and wildlife photography"
-}
-```
-
-**Chat:**
-```json
-{
-  "message": "What's the best time to visit Ontario parks for hiking?"
-}
-```
-
-**Visit Plan:**
-```json
-{
-  "parkId": 1,
-  "durationDays": 3,
-  "interests": "hiking, photography",
-  "season": "summer"
-}
-```
-
----
-
-## AI Features
-
-### Enabling AI Services
-
-All AI features are powered by the **GitHub Copilot SDK** using the **Microsoft Agent Framework**. No separate API keys are needed — the app uses your existing GitHub Copilot installation.
-
-**Requirements:**
-- GitHub Copilot CLI installed and authenticated
-- Active GitHub Copilot subscription (includes free tier)
-
-**Configuration** (optional — in `appsettings.json`):
-```json
-{
-  "AI": {
-    "Provider": "GitHubCopilot",
-    "Model": ""
-  }
-}
-```
-
-> **Tip:** You can also set the model via the `GITHUB_COPILOT_MODEL` environment variable. Leave empty to use the default model.
-
-### Available AI Features
-
-#### 1. **Park Summaries**
-Generate engaging, AI-crafted summaries for any park.
-- **Endpoint:** `POST /api/ai/parks/{id}/summary`
-- **Returns:** Plain text summary (200-300 words)
-
-#### 2. **Recommendations**
-Get personalized park suggestions based on activities, region, and interests.
-- **Endpoint:** `POST /api/ai/recommendations`
-- **Input:** Activities list, region preference, free-form preference text
-- **Returns:** Ranked list of parks with match scores and reasons
-
-#### 3. **Chat Assistant**
-Ask questions about Ontario parks and get intelligent answers.
-- **Endpoint:** `POST /api/ai/chat`
-- **Input:** User message (optional conversation history)
-- **Returns:** AI-generated response
-
-#### 4. **Visit Planner**
-Generate customized day-by-day visit plans.
-- **Endpoint:** `POST /api/ai/plan-visit`
-- **Input:** Park ID, duration (1-14 days), interests, season
-- **Returns:** Structured visit plan with daily activities and tips
+![Swagger API](screenshots/09-api-swagger.png)
 
 ---
 
@@ -280,210 +217,62 @@ Generate customized day-by-day visit plans.
 
 ```
 OntarioParksExplorer/
-├── OntarioParksExplorer.sln                 # Solution file
-├── OntarioParksExplorer.AppHost/            # Aspire orchestration host
-│   ├── AppHost.cs                           # Service registration
-│   └── appsettings.json                     # Aspire config
-├── OntarioParksExplorer.Api/                # ASP.NET Core REST API
-│   ├── Controllers/                         # API endpoints
-│   │   ├── ParksController.cs               # Park operations
-│   │   ├── ActivitiesController.cs          # Activities listing
-│   │   └── AiController.cs                  # AI features
-│   ├── Services/                            # Business logic
-│   │   ├── ParksService.cs                  # Park data service
-│   │   └── AI/
-│   │       └── AiService.cs                 # AI integration service
-│   ├── Data/                                # Database
-│   │   ├── ParksDbContext.cs                # EF Core context
-│   │   └── DataSeeder.cs                    # Seed data loading
-│   ├── Models/                              # Entity models
-│   │   └── DTOs/                            # Data transfer objects
-│   ├── Program.cs                           # Configuration
-│   └── parks.db                             # SQLite database
-├── OntarioParksExplorer.Blazor/             # Blazor Web UI
-│   ├── Components/                          # Blazor components
-│   ├── Services/                            # Client-side services
-│   ├── Program.cs                           # Blazor configuration
-│   └── wwwroot/                             # Static assets
-├── OntarioParksExplorer.React/              # React SPA
-│   ├── src/
-│   │   ├── pages/                           # Page components
-│   │   ├── components/                      # Reusable components
-│   │   ├── services/                        # API client services
-│   │   └── App.tsx                          # Root component
-│   ├── vite.config.ts                       # Vite configuration
-│   ├── tsconfig.json                        # TypeScript config
-│   └── package.json                         # Dependencies
-├── OntarioParksExplorer.ServiceDefaults/    # Shared Aspire config
-│   └── Extensions.cs                        # Health checks & telemetry
-├── seed-data/                               # Database seed data
-│   └── parks.json                           # Sample park data
-└── aspire.config.json                       # Aspire configuration
-
+├── OntarioParksExplorer.AppHost/        # Aspire orchestration
+├── OntarioParksExplorer.Api/            # ASP.NET Core REST API
+│   ├── Controllers/                     # Parks, Activities, AI, Settings
+│   ├── Services/AI/                     # Copilot SDK integration
+│   ├── Data/                            # EF Core + SQLite
+│   └── Models/DTOs/                     # Data transfer objects
+├── OntarioParksExplorer.Blazor/         # Blazor Server frontend
+│   ├── Components/Pages/               # Home, Parks, Map, Chat, Settings
+│   └── Services/                        # API client
+├── OntarioParksExplorer.React/          # React + TypeScript frontend
+├── OntarioParksExplorer.Api.Tests/      # Unit tests (46+)
+├── OntarioParksExplorer.E2E/            # Playwright E2E tests
+├── OntarioParksExplorer.ServiceDefaults/ # Shared Aspire config
+└── seed-data/parks.json                 # 67 Ontario parks
 ```
 
 ---
 
 ## Running Tests
 
-### Run All Tests
-
 ```bash
 cd OntarioParksExplorer
+
+# All tests
 dotnet test
-```
 
-### Run Specific Test Project
-
-```bash
-dotnet test OntarioParksExplorer.Api.Tests
-```
-
-### Run with Verbose Output
-
-```bash
+# Verbose
 dotnet test --verbosity detailed
-```
-
----
-
-## Development
-
-### Building the Solution
-
-```bash
-cd OntarioParksExplorer
-dotnet build
-```
-
-### Building Just the API
-
-```bash
-dotnet build OntarioParksExplorer.Api
-```
-
-### Building the React Frontend
-
-```bash
-cd OntarioParksExplorer/OntarioParksExplorer.React
-npm run build
-```
-
-### Watching for Changes
-
-**Blazor (automatic with Aspire):**
-```bash
-dotnet watch
-```
-
-**React:**
-```bash
-cd OntarioParksExplorer/OntarioParksExplorer.React
-npm run dev
-```
-
----
-
-## Database
-
-The application uses **SQLite** with **Entity Framework Core**. The database is automatically seeded from `seed-data/parks.json` on first run.
-
-### Database Migrations
-
-```bash
-# Create a new migration
-dotnet ef migrations add MigrationName --project OntarioParksExplorer.Api
-
-# Apply migrations
-dotnet ef database update --project OntarioParksExplorer.Api
-
-# Remove last migration
-dotnet ef migrations remove --project OntarioParksExplorer.Api
-```
-
----
-
-## Configuration
-
-### appsettings.json (API)
-
-```json
-{
-  "ConnectionStrings": {
-    "ParksDb": "Data Source=parks.db"
-  },
-  "Cors": {
-    "AllowedOrigins": ["http://localhost:5173", "https://localhost:5173"]
-  },
-  "AI": {
-    "Provider": "GitHubCopilot",
-    "Model": ""
-  }
-}
-```
-
----
-
-## Troubleshooting
-
-### Port Conflicts
-
-If ports are already in use:
-- **Blazor (7001):** Check `launchSettings.json` in Blazor project
-- **React (5173):** Set `PORT` environment variable
-- **API (7002):** Check `launchSettings.json` in API project
-- **Aspire Dashboard (17236):** Aspire will auto-select another port if busy
-
-### AI Features Not Working
-
-- Verify GitHub Copilot CLI is installed (`copilot --version`)
-- Ensure you are authenticated (`copilot auth login`)
-- Check the Settings page in the Blazor app for AI status
-- Check API logs in Aspire Dashboard for errors
-- Verify your GitHub Copilot subscription is active
-
-### Database Issues
-
-```bash
-# Reset database (remove and recreate)
-rm OntarioParksExplorer/OntarioParksExplorer.Api/parks.db
-aspire run
-```
-
-### Aspire CLI Not Found
-
-```powershell
-# PowerShell
-irm https://aspire.dev/install.ps1 | iex
-
-# Bash
-curl -sSL https://aspire.dev/install.sh | bash
 ```
 
 ---
 
 ## Documentation
 
-Additional documentation is available in the [`docs/`](docs/) folder:
-
 | Document | Description |
 |----------|-------------|
-| [User Manual](docs/USERMANUAL.md) | Comprehensive guide with screenshots for all features |
-| [Demo Script](docs/DEMO.md) | Guided walkthrough for live demos (10-15 minutes) |
+| [📖 User Manual](docs/USERMANUAL.md) | Comprehensive guide with screenshots for all features |
+| [🎬 Demo Script](docs/DEMO.md) | Guided walkthrough for live demos (10-15 minutes) |
+
+---
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| **Aspire CLI not found** | `irm https://aspire.dev/install.ps1 \| iex` |
+| **AI features not working** | Install Copilot CLI: `gh extension install github/gh-copilot` then `copilot auth login` |
+| **Port conflicts** | Aspire auto-assigns ports. Check the dashboard for actual URLs |
+| **Database issues** | Delete `parks.db` and re-run `aspire run` to re-seed |
 
 ---
 
 ## License
 
-MIT License — See LICENSE file for details.
+MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
-## Support
-
-For issues, questions, or contributions, please open an issue on the [GitHub repository](https://github.com/bcapuano/OntarioParksExplorer).
-
----
-
-**Last Updated:** 2026-04-11  
-**Maintained by:** Ontario Parks Explorer Team
+**Built with ❤️ by [Bruno Capuano](https://github.com/elbruno) using GitHub Copilot CLI + Squad**
