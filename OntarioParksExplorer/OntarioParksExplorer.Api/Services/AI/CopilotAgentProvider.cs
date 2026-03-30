@@ -43,14 +43,19 @@ public class CopilotAgentProvider : ICopilotAgentProvider, IAsyncDisposable
             _copilotClient = new CopilotClient();
             await _copilotClient.StartAsync();
 
+            var sessionConfig = new SessionConfig
+            {
+                OnPermissionRequest = PermissionHandler.ApproveAll,
+                SystemMessage = new SystemMessageConfig { Content = DefaultInstructions }
+            };
+
             var model = _configuration["AI:Model"];
             if (!string.IsNullOrEmpty(model))
             {
-                Environment.SetEnvironmentVariable("GITHUB_COPILOT_MODEL", model);
+                sessionConfig.Model = model;
             }
 
-            _agent = _copilotClient.AsAIAgent(
-                instructions: DefaultInstructions);
+            _agent = _copilotClient.AsAIAgent(sessionConfig);
 
             _isConfigured = true;
             _logger.LogInformation("Copilot AI agent initialized successfully");
