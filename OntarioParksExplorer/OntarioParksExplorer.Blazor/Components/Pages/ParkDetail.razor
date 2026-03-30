@@ -154,6 +154,7 @@
     private List<BreadcrumbItem> breadcrumbs = new();
     private string? aiSummary;
     private bool isGeneratingSummary = false;
+    private bool mapInitialized = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -174,8 +175,9 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && park != null)
+        if (!mapInitialized && park != null && !isLoading)
         {
+            mapInitialized = true;
             await JS.InvokeVoidAsync("mapInterop.initMap", "parkDetailMap", park.Latitude, park.Longitude, 10);
             await JS.InvokeVoidAsync("mapInterop.addMarker", park.Latitude, park.Longitude, park.Name, $"<strong>{park.Name}</strong><br/>{park.Location}");
         }

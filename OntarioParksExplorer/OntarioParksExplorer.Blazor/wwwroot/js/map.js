@@ -3,6 +3,8 @@ let markers = [];
 
 window.mapInterop = {
     initMap: function (elementId, lat, lon, zoom) {
+        const container = document.getElementById(elementId);
+        if (!container) return;
         if (map) {
             map.remove();
         }
